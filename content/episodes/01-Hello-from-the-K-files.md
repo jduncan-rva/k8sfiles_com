@@ -21,6 +21,10 @@ type: featured
 
 In our first episode we cover some interesting news of the day, as well as some of our personal highlights around recent [KubeCon](https://events19.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/) and [re:Invent](https://reinvent.awsevents.com/) conferences. Here's what we talked about (more or less).
 
+{{< buzzsprout 
+url = "2470697-episode-01-getting-started-grab-bag.js"
+>}}
+
 {{< tip 
 title = "Visit from the Technical Difficulty Gremlin"
 >}}

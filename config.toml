@@ -84,6 +84,7 @@ disqusShortname = "k8sfiles"
 
 #################### default parameters ################################
 [params]
+buzzsproutAcct = "812318"
 logo = "images/logo-54.png"
 home = "Home"
 # Meta data
