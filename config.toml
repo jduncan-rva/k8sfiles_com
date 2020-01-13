@@ -1,0 +1,135 @@
+######################## default configuration ####################
+baseURL = "https://k8sfiles.com"
+languageCode = "en-us"
+title = "The K Files Podcast"
+theme = "liva-hugo"
+summaryLength = "10"
+paginate = 6
+disqusShortname = "k8sfiles"
+
+[outputs]
+  home = ["HTML", "AMP", "RSS", "JSON"]
+
+############################# Plugins ##############################
+[params.plugins]
+
+  # CSS Plugins
+  [[params.plugins.css]]
+  URL = "plugins/bootstrap/bootstrap.min.css"
+  [[params.plugins.css]]
+  URL = "plugins/slick/slick.css"
+  [[params.plugins.css]]
+  URL = "plugins/themify-icons/themify-icons.css"
+  [[params.plugins.css]]
+  URL = "plugins/venobox/venobox.css"
+  [[params.plugins.css]]
+  URL = "plugins/custom/custom.css"
+  [[params.plugins.css]]
+  URL = "https://fonts.googleapis.com/icon?family=Material+Icons"
+
+  # JS Plugins
+  [[params.plugins.js]]
+  URL = "plugins/jQuery/jquery.min.js"
+  [[params.plugins.js]]
+  URL = "plugins/bootstrap/bootstrap.min.js"
+  [[params.plugins.js]]
+  URL = "plugins/slick/slick.min.js"
+  [[params.plugins.js]]
+  URL = "plugins/venobox/venobox.min.js"
+  [[params.plugins.js]]
+  URL = "plugins/search/fuse.min.js"
+  [[params.plugins.js]]
+  URL = "plugins/search/mark.js"
+  [[params.plugins.js]]
+  URL = "plugins/search/search.js"
+  
+############################## navigation ###############################
+[menu]
+  
+  # main menu
+  [[menu.main]]
+  name = "Purpose"
+  URL = "purpose"
+  weight = 1
+  
+  [[menu.main]]
+  name = "About"
+  hasChildren = true
+  weight = 2
+
+    [[ menu.main ]]
+    name = "jduncan" 
+    parent = "About"
+    URL = "about/jduncan" 
+
+    [[ menu.main ]]
+    name = "josborne"
+    parent = "About" 
+    URL = "about/josborne" 
+
+    [[ menu.main ]]
+    name = "tislam"
+    parent = "About"
+    URL = "about/tislam"
+  
+  [[menu.main]]
+  name = "Episodes"
+  URL = "episodes"
+  weight = 3
+  
+  [[menu.main]]
+  name = "Contact"
+  URL = "contact"
+  weight = 4
+
+#################### default parameters ################################
+[params]
+logo = "images/logo-54.png"
+home = "Home"
+# Meta data
+description = "Home of The K Files Podcast"
+author = "The K Files Team"
+# google map
+gmapAPIKey = "AIzaSyBy2HbjbONDxt_X8txbQb7mXtcqtKkpnMQ"
+mapLat = 35.787743
+mapLon = -78.644257
+# Google Analitycs
+googleAnalitycsID = "UA-90496768-3"
+# Contact Information
+mobile = "0124857985320"
+email = "demo@email.com"
+location = "Raleigh, NC"
+# copyright
+copyright = "| @2019 The K Files Team. All Rights Reserved |"
+
+  # Preloader
+  [params.preloader]
+  enable = true
+  preloader = "/images/preloader.gif" # use .png , .svg or .gif format
+
+  # search
+  [params.search]
+  enable = true
+
+  # Navigation get start button
+  [params.navButton]
+  enable = false
+  label = "Get A Quote"
+  link = "contact"
+
+############################ news letter ########################
+[params.newsletter]
+enable = false
+title = "Join Our Newsletter"
+content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero"
+
+############################# social site ########################
+[[params.social]]
+title = "twitter"
+icon = "ti-twitter-alt" # themify icon : https://themify.me/themify-icons
+link = "https://twitter.com/thek8sfiles"
+
+[[params.social]]
+title = "episode-rss"
+icon = "ti-rss-alt" # themify icon : https://themify.me/themify-icons
+link = "/episodes/index.xml"

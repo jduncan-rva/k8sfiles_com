@@ -1,0 +1,5 @@
+# rewrite episodes vanity URL 
+https://episodes.k8sfiles.com/* https://k8sfiles.com/episodes/:splat 301!
+
+# Optional: Redirect default Netlify subdomain to primary domain
+https://k8sfiles.netlify.com/* https://k8sfiles.com/:splat 301!
