@@ -19,13 +19,13 @@ tags:
 type: featured
 ---
 
+In our first episode we cover some interesting news of the day, as well as some of our personal highlights around recent [KubeCon](https://events19.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/) and [re:Invent](https://reinvent.awsevents.com/) conferences. Here's what we talked about (more or less).
+
 {{< tip 
 title = "Visit from the Technical Difficulty Gremlin"
 >}}
 Jamie had some mic issues that are resolved after this episode. We're so sorry he sounds like he was recording from an airplane bathroom at 34,000 feet!
 {{< /tip >}}
-
-In our first episode we cover some interesting news of the day, as well as some of our personal highlights around recent [KubeCon](https://events19.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/) and [re:Invent](https://reinvent.awsevents.com/) conferences. Here's what we talked about (more or less):
 
 * At their North America VMWorld conference, VMWare mentioned that their Project Pacific could deliver up to 8% faster performance in VMs than on bare metal. After some belly-laughs and confusion, here is [some clarification](https://blogs.vmware.com/performance/2019/10/how-does-project-pacific-deliver-8-better-performance-than-bare-metal.html). 
 * An increasing number of Ops professionals have only administered cloud infrastructure. They've never operated in an environment that had to account for cabling, racking, cooling, and power budgets.
