@@ -10,4 +10,4 @@ description: "this is meta description"
 type : "contact"
 ---
 
-I'm (more or less) active on these social media and sharing sites. Feel free to contact me on any of them!
+You can find The K Files episodes on our RSS feed for this site and in most podcast services like Spotify, Apple Music, etc. If you want to reach out to us directly, the Twitter account below is going to be your best bet. Thanks!
