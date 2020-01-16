@@ -24,7 +24,7 @@ url = "2502688-episode-02-getting-into-multi-tenancy.js"
 
 Things we touched on in this episode.
 
-* Ian Coldwater and Duffie Coolie abuse Kubernetes defaults
+* Ian Coldwater and Duffie Cooley abuse Kubernetes defaults
 {{< tweet 1174793280011325456 >}}
 * Liz Rice ARP Spoofing Kubernetes
 
