@@ -31,6 +31,8 @@ title = "Visit from the Technical Difficulty Gremlin"
 Jamie had some mic issues that are resolved after this episode. We're so sorry he sounds like he was recording from an airplane bathroom at 34,000 feet!
 {{< /tip >}}
 
+#### Show Notes
+
 * At their North America VMWorld conference, VMWare mentioned that their Project Pacific could deliver up to 8% faster performance in VMs than on bare metal. After some belly-laughs and confusion, here is [some clarification](https://blogs.vmware.com/performance/2019/10/how-does-project-pacific-deliver-8-better-performance-than-bare-metal.html). 
 * An increasing number of Ops professionals have only administered cloud infrastructure. They've never operated in an environment that had to account for cabling, racking, cooling, and power budgets.
 * In Kubernetes 1.17, the [Service Topology](https://kubernetes.io/docs/concepts/services-networking/service-topology/) capability allows you to route traffic based on your cluster topology like rack, availability zone, etc.

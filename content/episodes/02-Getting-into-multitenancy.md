@@ -22,7 +22,7 @@ In episode 02 we dig into what it means to define tenants inside your Kubernetes
 url = "2502688-episode-02-getting-into-multi-tenancy.js"
 >}}
 
-Things we touched on in this episode.
+#### Things we touched on in this episode.
 
 * Ian Coldwater and Duffie Cooley abuse Kubernetes defaults
 {{< tweet 1174793280011325456 >}}
