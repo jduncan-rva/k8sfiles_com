@@ -16,7 +16,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 In our first episode we cover some interesting news of the day, as well as some of our personal highlights around recent [KubeCon](https://events19.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/) and [re:Invent](https://reinvent.awsevents.com/) conferences. Here's what we talked about (more or less).
