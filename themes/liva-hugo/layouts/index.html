@@ -29,7 +29,7 @@
   <div class="container">
     <div class="h4">Episodes</div>
     <div class="row">
-      {{ $paginator := .Paginate (where .Site.RegularPages "Type" "episodes") }}
+      {{ $paginator := .Paginate (where .Site.RegularPages "Type" "episode") }}
       {{ range $paginator.Pages }}
       <div class="col-4 small-post-border" style="margin-bottom: 20px;">
         <article class="media">
