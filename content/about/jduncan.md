@@ -1,5 +1,5 @@
 ---
-title: "about jduncan"
+title: "about Jamie Duncan"
 date: 2019-12-31T09:41:32-05:00
 draft: false
 image: "/images/jduncan-headshot.jpeg"
