@@ -8,7 +8,8 @@ author: "The K Files Team"
 categories: 
   - Episodes
 tags:
-  - 
+  - opa
+  - security
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
