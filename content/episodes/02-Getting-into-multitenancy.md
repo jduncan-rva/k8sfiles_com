@@ -13,7 +13,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 In episode 02 we dig into what it means to define tenants inside your Kubernetes cluster. This is still something of a "choose your own adventure" process, so the answers are hard to come by and almost always start with "well, it depends". We do our best to put up some guard rails so you can find success with this challenge more easily than the people who've done it before you.
