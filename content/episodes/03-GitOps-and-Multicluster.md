@@ -18,7 +18,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 When GitOps is done well (or poorly?) it can feel like you're crossing the streams in Ghostbusters. In this episode we dig into what GitOps means, how we can get there as a community, and how it affects implementing a multi-cluster Kubernetes deployment.
