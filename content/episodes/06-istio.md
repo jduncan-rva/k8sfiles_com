@@ -2,7 +2,7 @@
 title: "Episode 06 Istio"
 date: 2020-03-30T10:39:16-04:00
 draft: false
-image: "/images/blog-default.jpg"
+image: "/images/06/istio-logo.png"
 summary: "short summary for post"
 author: "The K Files Team"
 categories: 
