@@ -21,6 +21,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 url = "2730940-episode-04-open-policy-agent-opa.js"
 >}}
 
+[Transcript](/transcripts/episode-01-getting-started-grab-bag_otter.ai.txt)
+
 #### Links and notes from this episode
 
 * some thing

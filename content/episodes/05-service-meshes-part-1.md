@@ -28,6 +28,8 @@ After some discussion, we settle them pretty comfortably into the continuum of a
 url = "2949088-episode-05-services-meshes-part-1.js"
 >}}
 
+[Transcript](/transcripts/episode-05-services-meshes-part-1_otter.ai.txt)
+
 #### Links and notes from this episode
 
 * [Istio Project](https://istio.io/)

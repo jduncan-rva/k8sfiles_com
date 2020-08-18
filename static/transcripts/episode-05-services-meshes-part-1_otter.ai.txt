@@ -1,0 +1,217 @@
+Tariq Islam  0:07  
+We do intros for us, right? Yes. Thanks for
+
+Jamie Duncan  0:13  
+joining us on the K files. Each week we take on a different topic in the Kubernetes community and the IT industry. Depending on the week, we may find ourselves knee deep in kernel headers, magic quadrants or even startup pitch decks.
+
+Unknown Speaker  0:26  
+Our goal is to close each file with a sense of completeness and satisfaction for us and anyone listening. Hey, thanks again for joining us on
+
+Jamie Duncan  0:33  
+the K files. My name is Jamie Duncan. I'm a staff architect at VMware with me as always, is john Osborne.
+
+John Osborne  0:41  
+Hi everyone. This is john Osborne with red hat and chief architect at Red Hat
+
+Jamie Duncan  0:45  
+and tark Islam.
+
+Tariq Islam  0:46  
+Hey everyone. tark Islam here with Google specialist manager focusing on hybrid cloud.
+
+Jamie Duncan  0:51  
+We'd said on Twitter a couple a week or so ago and apologies for having a little bit of a gap in the in the day to one of us went on a cruise. We're gonna leave That person is
+
+worth it.
+
+Yeah, we're all we're all coming from a completely jealous place.
+
+But we said a couple weeks ago, we were gonna dig into service meshes. And we don't know if this is going to be three episodes or 12. probably closer to three, but at least three. And we're going to dig into service meshes in Kubernetes. And figuring out not only what they are, but why they are. And when you really need one. It was at least for me, I've, I come from the the most ops out of all three of us, I've done the least development out of the three of us, I see very little need, or very few people who truly need a service mesh from my perspective. And I have to assume that is wrong, that I'm just kind of missing the boat somewhere. Because Holy crap, I can't swing a dead cat without somebody talking about service meshes on Twitter or on LinkedIn or every conference everywhere.
+
+Tariq Islam  2:01  
+Yeah, but I think I mean, we have like, what maybe a half a million blog posts in the last six months talking about service meshes and what they are and why you need them. I think I mean, for what we're trying to do on this episode here is, again, keeping consistent with what we're here to do is tease out patterns of the why not just about Okay, a service mesh gets you observability agility and policy based security. I mean, if you're looking for that, I mean, we can point you to probably at least, like I said, 100 different blogs about it. But I think and we were discussing this before, and we've hit on this a couple of times in earlier episodes, but you know, Kubernetes out of the box, I just I don't think it covers all the things that mature IT organizations or any enterprise in any meaningful sense require for for production environment, right. I mean, Kubernetes gets to a certain part of the way there for a while. People thought that Kubernetes got you all the way there. But there are still purposeful gaps in Kubernetes. In the enterprise space that just aren't in scope for Kubernetes. Right, we had things like network policy, for example, to address certain certain use cases. But even that's limited. an enterprise use cases are extremely diverse. And there's a lot of need for flexibility. And I think that service meshes are if a great attempt, and I say attempt because things I think, are just starting in this ecosystem. But service meshes are a great way of meeting enterprises where they are today in terms of the maturity of capabilities that they require to actually roll something out, roll services out and manage services and observe services in their environments in a meaningful way.
+
+John Osborne  3:49  
+Yeah, I think that's pretty accurate. I mean, if you look at, you know, to date, I would say that the actual adoption of service meshes has been, well, it is it is adopted in some enterprises and some startups and things like that. I'd say it's slower than the actual marketing material that's been out there. But I think that a lot of customers end up needing service mesh after they've been using Kubernetes for about a year or so because Kubernetes ends up exacerbating a lot of existing problems that they had with their existing processes, because the environment tends to be more dynamic, they ended up moving faster, they end up needing a way to provision certificates needing workload identities, those types of things that they had existing, but in the old way of doing things with, you know, a large JVM running in a VM that never moved and those things, it ends up becoming more exacerbated, and then to automate more of that. issues and compliance. I mean, most of the requests I see for service mesh are around implementing what we call the zero trust network, or the zero trust model that came out of the Google beyond Corp stuff which Turk if you want to cover would be cool. There are some people who look at it as a way to move the Microsoft Service, you know, traditional Google stubby or Netflix hystrix type of logic from these like kind of fat client libraries that are co located with your app into a proxy, where you can kind of offload that code into more of a configuration, as well. But I see most of the use cases are around the people want the zero trust model. They want it in a dynamic environment to get there, they need to automate their certificates, they need to automate their identity and those types of things.
+
+Jamie Duncan  5:28  
+That helps me a fair amount. And let me make sure I'm thinking about this the right way. So we've sort of like you talked about this sort of big monolithic JVM that is running in there are dozens of workflows running inside this big giant chunk of code. And as that is being decomposed into smaller services, the cracks in security and the cracks in like you said, trust start to show, I think so. And is that sort of where the need for service mesh being able to put something more complex than what a network can do? Because we're trying to bring the functionality of inter process communication. Now we need to secure that process across a network.
+
+John Osborne  6:10  
+I think so, I mean, the general, I'd be interested in your take Terk, too. But the general kind of pattern I see with a Kubernetes adoption is they start to get they get used to it, they start refactoring apps, they end up going faster. And then the second, they go faster, they end up breaking other existing processes around certificate requests around the lack of maturity of their ci CD pipeline, the lack of runtime security. So they end up needing to automate a lot of their processes in ci cd space, then they look at runtime stuff, they end up hitting these huge bottlenecks, especially around certificates, and things like that in the dynamic environment that is Kubernetes. And so that's when they kind of hit the point where they do need something to automate, you know, with the automatic injection or those types of things where they do get to that point eventually, but I think kind of moving that way. Day one One can be a challenge because there is kind of an adoption curve of Kubernetes as well, right. So
+
+Tariq Islam  7:04  
+yeah, I think all three of us have seen this a lot. But Kubernetes tends to, and I'm not trying to veer away from service meshes. I'm actually coming back to it. But Kubernetes in general, the adoption of it does tend to absolutely bring about a new cute self awareness for enterprise technical debt. And suddenly, folks are like, oh, wow, the way we've been doing things just simply does not work in this new way. I think service meshes are
+
+John Osborne  7:32  
+fantastic, because I want to do a talk on that. together. That's a good spot. Yeah. Well,
+
+Tariq Islam  7:38  
+we'll submit that as abstract. Absolutely.
+
+Jamie Duncan  7:40  
+Yeah. Yeah. For 2021 though, because the
+
+Tariq Islam  7:43  
+right right, yeah, yeah. Can't can't be getting infected with Coronavirus. Now, that being said, though, I mean, I don't know service meshes are explicitly trying to address that technical debt because I think I think it actually right now, I think it might actually be making it a little bit worse because what I'm seeing what I'm seeing at least is enterprises are not loath to leave that technical debt behind. But it's so difficult to do that right for me to adopt Kubernetes. Okay, I've got technical debt of X, Y, and Z in terms of whether it's people processes or legacy tech, you know, tech or something like that. Now, if I want to address some of that, I can adopt sto, but sto now brings about some other issues similar to how Kubernetes did in terms of exposing some more technical debt, right around certificates and things like that. And I think to your point, john, earlier about, you know, the difference that we're seeing between all of the marketing and the campaigning and the proliferation of service meshes and things like that, versus actual adoption, there's a huge huge dichotomy there. I think and I'd love to get your take john and Jamie on this, but I've not really seen A lot of folks in production with a service mesh of any kind, it's it's rather rare. But I do see a lot of exploration around it, I think sto or sorry, sto linker D, a lot of these different service meshes are going through this whole same kind of adoption cycle that Kubernetes went through a few years back.
+
+Jamie Duncan  9:19  
+I think the same thing, like in my organization at VMware, anytime you say is to certainly people were like, What are you talking about? Why are we talking about, we don't shy away from them, but the criteria for needing one is very high. So and I think you just said the same thing a different way. Like we don't see a lot of people running them in production. So we haven't hit that threshold where production workloads need the additional complexity of a service mesh.
+
+John Osborne  9:45  
+Well, that's where we people get into like which service meshes better and that's where I think that there's room for plenty of the different implementations that are out there. Because if you look at something like sto, it's the most full feature but with that, you know, comes complexity. There's others service meshes that You know, meet you where you are in terms of like your specific need without giving you all that those feature sets. And we'll do more episodes. I think after this where we kind of deep dive into things like linker D and maybe console or Kuma, things like that. But that does become, you know, I do think that there's room for plenty of service meshes in that space, there is a speck that's out there, which I haven't actually looked too far into yet. I don't know if you guys have looked to that SME spec that Microsoft came out with.
+
+Tariq Islam  10:26  
+I'm not actually looking at the spec. But but just to just to roll back to what Jamie had mentioned, I'd actually turned that on its head a little bit and say that, you know, for folks that are embarking on this modernization journey of, you know, wanting to run better, faster, more efficiently with Kubernetes. And the tools and tech in its ecosystem. I almost feel like adopting a service meshes is kind of obligatory if you want the full potential of Kubernetes, if that makes sense, right? Because again, Kubernetes gets you only so far service meshes. Get You almost the rest of the way, conceptually in theory, and then there are a bunch of other things that kind of get you fully to where you want to be. But I want to say that the the justification for the service mesh comes from the fact that you actually need it to realize your intent to modernize your enterprise
+
+John Osborne  11:24  
+you eventually need it will eventually be kind of see these things too with, you know, organizations, especially enterprises, they start off with monolithic applications. They end up moving to microservices, or what they think is micro services. Sometimes it's what I would call a distributed monolith. But they get there they try to put, you know, in between their independent teams, they put up SLS, API's, those types of things as follows. They end up moving to this path of microservices. And I think once you get into that really dynamic environment, you definitely need Kubernetes and you definitely need probably a service mesh at that point. But do you think that that's a requirement? Do you think that moving too much Services is a requirement. like where's the tipping point where you really need a zero trust model you really needed, you know, sto or linker D or these other things.
+
+Jamie Duncan  12:11  
+A couple, I think three things. Number one distributed monolith is awesome. And I'm totally stealing that. At least my read of the world right now, is that the the evolution is sort of current state to containerization to to distributed system like Kubernetes and then applying a service mesh on top of it, at some point down the road. If a service mesh is inevitable, do we start designing for one from the beginning? Is that where we should be if we're designing a new system today, even if we're not going to start consuming three sources? My gut says you don't bring in the complexity until you need it. But if it is inevitable, re architecture versus absorbing new features that are already there. is typically a lower lift. I think
+
+John Osborne  13:05  
+that's a hard question.
+
+Tariq Islam  13:06  
+Yeah. Yeah, it is really loaded. I think you, I think you should, but you're also biting off more than you can chew for the traditional enterprise. org, right. But, you know, for teasing out patterns on this podcast, ideally, ideally, you should, at least in the back of your mind, have the fact that, okay, we're going to be adopting this, we're not going to be adopting service meshes at this time, but we understand or at least acknowledge that we're going to have to, you know, for a variety of reasons, in the near future, to take full advantage of this, this effort. Otherwise, it's gonna be a half big thing at the end of the day,
+
+Jamie Duncan  13:43  
+right? And you're gonna end up having to redesign the whole thing from scratch exactly as you've made some important choices.
+
+John Osborne  13:48  
+Yep. There's other things at play here too, though, because you think that you know, for at least a lot of ARCA stores at Red Hat, like a lot of times Kubernetes adoption also goes hand in hand with a cloud adoption. You know, the public cloud providers So they're also they also might be moving to, you know, Amazon or Azure or GCP. At the same time, they're adopting Kubernetes. While they're also hitting these bottlenecks with their ci CD pipeline or not having one. So it's really kind of an it depends question. That's why I was saying it's, it's pretty loaded. Because you know, a lot of times you to build kind of momentum, you kind of find the most forward leaning people in an organization, right, and help them make progress, then higher up, see that that's when you kind of build the groundswell but it kind of depends on how much rope they have in the organization. You know, what their team looks like? So it's, it's a lot of it depends. But yeah, I think ideally, you do get to this point, and as long as you can build momentum, then yeah, adopt it now. But if not,
+
+Jamie Duncan  14:42  
+like, like Tarik said, ideally, in a perfect world, we would design for service meshes from the outset. It almost sounds like we just don't have enough expertise in the industry yet to be able to do that for most people.
+
+Tariq Islam  14:54  
+Is that a valid statement? I mean, yes and no, right. I understand that that you know, Kubernetes API is is is a net new thing for a lot of folks. Same thing for service mesh API's. That it's just it's just a new language new skill sets that are required. But conceptually, we're still trying to do the same things, both within the service meshes that we have available to us as well as within Kubernetes. I think I think as, you know, vendors and size and you know, folks in the industry, I think it's it behooves us to maybe do a better job of skilling folks up in terms of helping them conceptualize and grok what both Kubernetes and the service meshes are trying to do in relation to what they're doing today. Right. Hey, you want you have firewalls today? Here's how you would do that in a service mesh. You want to stop you have established trust for your several monoliths that you may or may not think are microservices, you know in your VM based deployments, here's how you do that in container land. I think We do do this already. At least I know the three of us do this. And I know a number of folks do this. But I think this needs to be more of a larger theme in the community as well. Whereas right now, it's just kind of like Well, hey, microservices, just plug in plug, you know, just use a service mesh and go forth and conquer. And it's very little guidance and plenty of blog posts, like I said, a bound on training modules around about how to install service meshes and how to do a Hello World, but very little on actually mapping, you know, component to capability between what you have with Kubernetes and service meshes today versus what real folks are doing in the real world with an enterprise environment. I just don't see any of that.
+
+Jamie Duncan  16:41  
+What's your take on actually Jimmy I'd be interested in here though, most ops person I'm interested getting your take to what's your take on the whole idea of you know, I think we kind of agree all agree here that you're going to need zero trust model eventually with mutual TLS and strong identities and those things but the other side of it is a moving my application code that's in these kind of fat jars, you know, the Netflix OSS stuff outside of the application into something that can be configured. And more on top of that something that's going to be controlled by the ops team. So that the dev team, I think that makes sense. But there's also the kind of aspect to it where it's like, did it belong in the application code? Or is it something that can be externalized and changed by Ops, like the number of retries? And what happens when, you know, a downstream dependency is is not available in those types of things? Like, what do you What's your take on? kind of pulling out that application code and making it an ops configuration type of thing? Does that make sense? I think it does. I'm My take is that it's the natural evolution. What we see in our industry kind of writ large is we have a problem. The operation side of House has not matured to take this problem on because they didn't know this problem existed. So we handle it in the software. We handle it in the code And we see this all over the place, load balancing, business logic, all of these things where we solved it in the software. And then as the infrastructure matured and recognize the problem and recognized how to deal with the problem, we started pulling them out in Kubernetes really is a big chunk of that. And it's very much an ops tool. But it's decoupling those applications from the logic that deploys and builds and runs the applications. So that the app is just the app, where it's not the app and all the other stuff that it needs. I think that's, that's always the it's almost to come. The developers find a new problem. And they solve it the way they know how to solve it. And then at some point down the road, the ops teams kind of solve it for good.
+
+John Osborne  18:46  
+The biggest probably, to build on your point, the biggest thing that I see at least from the upside of people not letting go of which probably no time soon either Is this the old kind of DMZ concept to rehab this god no less secure. network segment, you know, inside of a, you know, other network segment. And when they move to the zero trust model, they end up doing more both where they say, Oh, well, I can move with network policies, I can move to micro segmentation. Now we're going to call it inside of my DMZ and then I'll turn on, you know, zero trust, like, do you ever see for putting your ops hat on? Do you ever see us getting to a point where, you know, organizations trust this model enough to crank down the DMC type of requirements? Because there's been things like I saw one thing. I did this talk on zero trust. And I saw, I was reading about this bank that they literally had 40 or 50 firewalls to go through, right, crazy.
+
+Jamie Duncan  19:42  
+I had one yeah, we had a customer. I was talking. They weren't someone I was engaged with. But one of my peers, there was a software firewall between every node in a Kubernetes cluster. What So yeah, I don't know how they got there. But they got There, and including the control plane. See, this is what happens when you don't design with service meshes.
+
+Tariq Islam  20:08  
+That's exactly what happened.
+
+Jamie Duncan  20:10  
+And as what john was talking about, it kind of made it kind of crystallized. You know, we solve, in particular on the upside of house because we're in I don't want to put the silos up, but they are very different mentalities, developers think a different way than operations people, because that's where they've landed, because that's the problems they solve effectively. Developers always want to build a new thing to solve a new problem. And that's sometimes that's a good idea. Oftentimes, it's not. And ops people always want to cast a new problem in the architecture that they understand. And we saw that with virtual machines like virtualization, oh, I can make a virtual machine look like a physical machine. So we have 15 or 20 years of making really weird VMs with 19 disks and 47 interfaces. When they didn't need that, but that's how we understood the world. So that's what we got. And now we're having to rethink all of that on the ops side of house with containers. Because now I get an easy run a loop back, how do I have a management network and a storage network and a storage control plane network? How do I do that all in any zero. And it makes us recast that problem in a new way, and ops is not going to do it until they're forced to do it.
+
+John Osborne  21:26  
+One of the thing that's forcing them to do it is these kind of insider threats that have came out the last several years, right? Like, if you look at even what happened at Target, where they had compromised, the thing was the H back engineer, right? Or the H back consultant or whoever came on site, they they had hacked his account, and then they, you know, Trojan horse, they got in through, you know, several firewalls, and then they ended up getting to the point of sale stuff. And then, you know, sending all that all that data off to an NFS server. And then of course, there's like the Snowden thing that happened a few years ago. So there's, if you look at the whole DNC concept that kind of falls down when you can't trust the people on the inside,
+
+Tariq Islam  22:03  
+that crunchy on the outside soft in the middle mentality. Right. One of our mottos here is walls don't work, right. And it's one of those things where if you're trying to avoid a single point of failure, a DMZ is absolutely not the way to avoid a single point of failure, because you know that that wall is going to get penetrated, it's going to fail at one point or another. And you're, you're you're basically hoping that that wall holds up against everything, I think with service meshes. And again, this is another reason why I think it's, it's an obligatory thing when you're designing out your monetization path with with containers and Kubernetes. And this whole brave new world of, of infrastructure. You know, the whole as john called out earlier, zero trust, right, least privilege and zero trust at the service level. And I think that's what service meshes get you. And I think that's why it's so important as a design principle upfront. I don't think enterprises have the luxury and I'm not talking about Again, enterprises, not developers, or, you know, just one off ops folks, but I'm talking about enterprise design patterns do not have the luxury of not considering service meshes right now. Because of that fact.
+
+Jamie Duncan  23:11  
+Yeah, that's a really good way to put it. I've never thought about my I'm coming from the ops chromogen world, you know, I'm not going to think about a new solution to a problem tell them absolutely forced to you until someone has me in a headlock and gets me in there. And I'm I like to think I'm one of the more forward thinking ops people
+
+John Osborne  23:31  
+your job stability, right. So right,
+
+Jamie Duncan  23:33  
+yeah, my job is not
+
+John Osborne  23:35  
+changed isn't ensuring does not make things stable. So
+
+Jamie Duncan  23:39  
+but it does, but my other job, I often tell customers, you know, might, the end user is the developer. But I'm beholden to security, and that beholden to security part is one of the most friction laden relationships in it.
+
+John Osborne  23:54  
+Yes, it is. And if service meshes can help reduce that friction, then I'm all for them. What kind of barriers Do you see kind of moving to this model, because one of the ones that I've seen with customers is that you end up with the service mesh ends up owning the root CA, because it needs to issue certificates very quickly. There's also some things around it uses the new spiffy format, which is a new standard, which I think is pretty cool, by the way, but then, you know, legacy, like identity stuff that, you know, looks for certain fields and x 509. Those types of things can be things are a little different. Is there? Do you think that's a learning curve that customers are going to get around? Or what's your kind of take on some of that stuff?
+
+Jamie Duncan  24:36  
+That particular stuff, I think is pretty easy. And you're always going to have understanding breeds flexibility, if you if they don't understand how a CA works. If they don't understand how a certificate works, they tend to put them in an ivory tower and you can never have a certificate except for these domains. Like when you're talking to a team about a new opportunity and or a new, a new platform like well, we can't Have wildcard certificates. That's just because you don't understand how that's because it's never been done.
+
+Tariq Islam  25:06  
+Summarize like five years of me doing this. Yeah,
+
+Jamie Duncan  25:09  
+yeah, exactly. Yeah. Yeah, we're all we're all sitting right in that same boat. But the same with like the the new SPF extensions, you know, the the new, the new what to forget what's the name the field in there that some CA's can't cover yet, the thing you just mentioned, like the whole spiffy stuff, all of that will fix itself in pretty short order. Because it's, it's the whole, it's good for the vendors to make it easier to deal with all of these things. I personally think, from my experience with customers, the people that I talk to the biggest barrier to adoption of service meshes is the adoption of Kubernetes. And I'm not saying that, like people aren't adopting Kubernetes I'm saying the opposite. I think it's, it's right now. It's simply bandwidth overload. Yeah, I would not do that, that everybody's brains a feefo buffer and right now Everyone's brain is full of Qube and you're asking the people to lay something even more complex with five or six or 12 new ideas inside it on top of the brand new thing in the in keeping with maritime with you know Kubernetes and sto and other maritime type things and the open source community right now that are popular.
+
+Tariq Islam  26:21  
+The analogy I like to use Have you ever been to the beach and you just get completely wiped out by a wave? And then the just when you get up you get hit again and you just completely just not you're you're knocked out right? You feel dead? You probably got salt water up your nose for the next several days. I feel like that's what I feel like service meshes are that second wave.
+
+Jamie Duncan  26:45  
+It's a great way to put it. Yeah, you're exactly right.
+
+Tariq Islam  26:47  
+And I just don't think you're out
+
+Jamie Duncan  26:49  
+getting my legs under me with qub and you're hitting with this thing. Barely.
+
+John Osborne  26:52  
+Yeah. Yeah. I'm not
+
+really sure that the CRD is what's the CRD?
+
+Tariq Islam  26:59  
+Right Right. I don't know, I I'd love to get your ideas on this guy's I I'm not really sure how to address that, right? Because this isn't really a technology problem, in my initial opinion, at least maybe and feel free to correct me, I feel like this is just a bandwidth issue and people can only, you know, organizations can only handle so much net new information at one given time, and I understand, you know, I'm saying, Hey, take service mesh design patterns into consideration and this and that, but we're also saying, well, it's kind of like the second wave of practically drowning. So what's the I mean, what's the middle ground? Right? Is there a way to do this? Is it usability, at the platform level? Is education is that a combination of the two? I'm not really sure.
+
+John Osborne  27:48  
+I think it's hiding some of the complexity through, you know, if you're, if you're using a vendor, you know, rely on the vendor to hide some of that complexity, with some of the automation that they can provide. If you're rolling your own. Then you probably want to at least start off with, you know, one of the more simple to use. One of the blogs I read actually said low cognitive overhead, they called it which I thought was kind of cool. But you know, something easy in that respect to get started with because there can be a lot, especially in terms of features, you probably may not need right out of the box, maybe in the future you do. But, you know, starting off with something easy. The theme I always come back to is it's just so critical within an organization, especially a larger, larger organization to build momentum. It's always the balance between demonstrating actual business value and boiling the ocean and kind of doing, you know, doing things the right way. And what is that balance and that's really a bit depends part of it, but
+
+Jamie Duncan  28:45  
+I 100% agree. I think the other aspect like kind of a human side of it is I'm going to go learn something when you give me a concrete dead on way that it's going to make make my life If easier and or help me fulfill my mission better. And with containers, that's an easy one for the obscene. We've got that messaging down for Kubernetes. The same we've got. And more importantly, we have these criteria that we figured out over time. And we did a lot of it in pre sales when we were all there, a lot of it in sort of the enablement and the the talk circuit around it, it's pretty easy to help someone identify applications that are going to be good in a container. And when it's time to deploy Kubernetes. We're there. I don't know. And this is, I would like both of your takes on it. When is the what is the lead pipe cinch feature? And or when do I know my team needs a service mesh? For me, I work in public sector and there's literally customers that have a hard requirement to do mutual TLS.
+
+John Osborne  29:53  
+So when they look at a dynamic environment like Kubernetes they start going faster. They had an old time certificate signing process where they literally made a CSR and send it off to somebody some, you know, silo in a silo sent back their pk 12, their pk 12 file or whatever it is. That just doesn't work anymore, especially in a fast moving environment unless you're just going to give every application every pod the same certificate. And they're supposed to be doing, you know, mutual TLS. So it gets, it's pretty easy to convince them at that point. And especially if you kind of talk about the zero trust model, it makes a lot of sense. I think the difficult part of it is when you talk to start talking, you know, Google stubby or Netflix hystrix, and some of those projects that those didn't have as much adoption as the marketing equaled either. So when you start talking about, oh, well, you know, your fat jar is not going to become a distributed transparent proxy inside of this fast moving Kubernetes thing. That's where you start to lose people, but I think if you kind of stick to the zero trust stuff, people get that and they want that, you know, strong identity and certificates stuff in there.
+
+Tariq Islam  30:58  
+tark What do you think is there Is there like a mutual TLS? is awesome. A follow up? I have to john in I don't know, this, you know, is there a way outside of a service mesh to get just that feature? I mean, sure. I see. That's the thing. I don't think I I don't think the point is the point features, not to be redundant there, but I don't I don't think it's about Okay, just, you know, mtls or, you know, whatever it's, it's, it's the declarative model that wraps around all of those things that you try your that you may need to be able to do within an enterprise setting, right? Because that's part of the value. I mean, that's, that's a huge value of Kubernetes. And that's exactly why service meshes have followed largely followed that model of being quote, unquote, Kubernetes native because that operational model suddenly makes it more integrated and makes it easier to adopt and use and manage and maintain that things about The functions and features like, you know, MT LS and all the other bells and whistles that you would need for zero trust. I think, you know what, yes, you could implement those point things outside of a service mesh, and even outside of Kubernetes. But you're looking at probably a lot of other tools and technologies that aren't necessarily related, or integrated to be able to do that. And what that equals is a snowflake. And we're back into this whole discussion of more technical debt. Now, what I've seen is, you know, with organizations that are adopting Kubernetes, they have a load of other tools and technologies that they're using to kind of bolt on these functions without the service mesh. And what's happening is they're modernizing and also creating more technical debt at the same time. If that makes sense. No, I think you're dead on Yeah,
+
+John Osborne  32:55  
+no, I think he actually hit something because especially people start to look at telemetry. And then like, Oh, well, there's a, there's a cost to that in terms of performance, it's like, well, you actually had these other agents that were sending stuff doing SNMP traps or other things, agents that you had before that actually was doing something very similar, but just in a slower, less, you know, cloud native way. So I think there is kind of that aspect too. They were probably trying to do this before, but not in an optimal way. And that kind of pattern comes with is similar to the story around metrics and logging to right where they they might have been doing something but it wasn't optimal, or they weren't using the data properly. And those are things that you know, I think you kind of spin it that way like we're already doing this, but we can make something more meaningful or make it more transparent. You know, that type of angle can
+
+Jamie Duncan  33:42  
+can help. I was thinking is y'all too, we're just talking in, kind of wheels are clicking in my head. So apologies if this is real Colucci. I'm thinking about it in real time. But like what we were talking about 10 or 12 minutes ago about when from the upside of house like winter, we went ops ready to adopt a new problem? Well, a huge part of where ops is right now is modernization and automation. And it's Ansible. And chef. And it's puppet. And it's integrating with ServiceNow. And it's doing a lot of API and API stuff where we can trigger a workflow based on a put a hit from another, another API. And exactly what john just said that sort of, I have a bunch of disconnected systems, and I'm going to tie them together with some glue. And it sounds like a service mesh from the ops perspective, is when we talk about when are you ready for that when you're ready to take that step? And that, to me is the most important thing is when is it? When is this when are the teams I'm talking to when are they ready to adopt this, this next thing? It's almost when that journey is coming into maturity? Where I've automated I've gotten rid of the spreadsheets. I've gotten rid of the three ring binder playbooks. I've gotten rid of most of my helpdesk stuff. I've gotten rid of ticket queues and I've gotten rid of email approvals. And now I need to take that automation and I need to make it cloud native. To me, that's what it sounds like a lot of what a service mesh is, like, generation of certificates, generation of all of that thing, all of that stuff inside Kubernetes that cloud native centric tooling. It's almost like the next step after Ansible.
+
+John Osborne  35:22  
+Yeah, I agree with that. And I should, that's a pretty good close, I think for first part. I think you kind of summed it up pretty nicely there,
+
+Tariq Islam  35:31  
+I would say. So, I do want to I'm wondering if, you know, part of the issue around adoption of service meshes is also a function of, you know, we don't know what we don't know, as an enterprise, right? Like, if you look at if when, so I've had instances where, you know, maybe I've given a talk or I've given a presentation on on service meshes, and I'll talk about how service As much as gets you fantastic things out of the box, like, you know, telemetry information that, you know are is astoundingly detailed agility in terms of, you know, simple things like traffic shaping, or maybe they're not so simple for the specific enterprise, you know, General observability patterns and things like that. I think, for many enterprises, they're looking to modernize, but their bar for modernization is actually and to no fault of their own. But their bar for modernization is actually lower than what service meshes are presenting in terms of capability. I almost feel like service meshes are offering an opportunity to exceed the expectations of modernization for any given enterprise. where, you know, an enterprise never knew that they could have that level of telemetry, they never knew that they could have that level of agility and so they just never really considered it. So that's why, you know, we've concluded that we probably just don't need a service mesh right now.
+
+Jamie Duncan  37:00  
+No, I think that's a really interesting point. And no one has ever gotten in trouble by going just far enough. Yeah, sure what you said there. And I think we do need to bring this in for landing. But what I often tell customers, especially when they're early on that automation journey, and the the best way to document a process is to automate it. And that idea of you don't know what you don't know, you don't know what Gremlins are hiding in what dark corners of my workflow of your workflows and of your processes. It sounds like, you know, sort of that automation journey for an ops team is going to find a bunch of them and then integrating a service mesh into workflows is gonna find a bunch more of them.
+
+John Osborne  37:40  
+Yeah, actually like that. Because I have a lot of customers to that. They're like, well, we're not ready for containers. We're doing it. So I'm like, well, that's awesome. Because a year from now, when you move to containers, you're gonna crush it because you know, every, you know, step to build your app, you know, how it's deployed. It's part of that documentation process, right. And you No, that's real because then they can get any incremental value. And then when they move to containers, they're ready. They're not turned out kind of boiling the ocean.
+
+Jamie Duncan  38:05  
+Yeah. And it does kind of put this whole thing on a continuum, which is, which usually means you have a pretty coherent idea. Yeah, I think I think we need to bring this in for Atlanta. I think the next episode do we want to go through is the next episode a deep dive into Sto. I think that's fair.
+
+Tariq Islam  38:22  
+Look at the technical bits and bytes of it. Yep.
+
+John Osborne  38:25  
+There was a there's a cap Kubernetes enhancement proposal for one to 18 around bringing sidecars to be more of a first class citizen. So it's going to cover that in this episode. I think we've kind of overrun time. So we could just hit it in the in the next go round.
+
+Jamie Duncan  38:40  
+That's That's interesting. I haven't read that one. That's pretty cool.
+
+John Osborne  38:44  
+Yeah, it's it's gonna stop some of the lifecycle dependency management stuff with a start stop the sidecar so
+
+Tariq Islam  38:50  
+so as far as as far as like the the file itself goes, I mean, I feel like we've answered the question of, do you need one? Yes, you absolutely need a service mesh even If you think you don't, I'm not sure if it's an appropriate conclusion here.
+
+Jamie Duncan  39:06  
+I'm much more bullish on them than I was 42 minutes ago.
+
+I mean, guys, I'm gonna I mean,
+
+John Osborne  39:15  
+that's right. Yeah.
+
+Jamie Duncan  39:17  
+Awesome. Well, thanks for joining us on this episode. We'll get this out as soon as we can. And apologies for the sort of delay in getting a new episode out while Tarik had his feet in the in the sand the oceans in the sand. Yeah, absolutely. The next episode we're hoping about two weeks from now is going to be a deep dive into the nuts and bolts and bits and bytes of sto how it works, the value it brings. And thanks a lot for joining us. We'll see you soon. Thank you
+

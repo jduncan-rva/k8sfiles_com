@@ -1,0 +1,21 @@
+{{ define "main" }}
+
+<section class="section-sm pb-0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2>{{ .Title | markdownify }}</h2>
+        <div class="content">
+          {{ .Content }}
+          <ul>
+          {{ range (readDir "static/transcripts") }}
+            <li><a href="{{ .Name }}">{{ .Name }}</a></li>
+          {{ end }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

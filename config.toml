@@ -82,6 +82,11 @@ disqusShortname = "k8sfiles"
   URL = "contact"
   weight = 4
 
+  [[menu.main]]
+  name = "Transcripts"
+  URL = "transcripts"
+  weight = 5
+
 #################### default parameters ################################
 [params]
 buzzsproutAcct = "812318"

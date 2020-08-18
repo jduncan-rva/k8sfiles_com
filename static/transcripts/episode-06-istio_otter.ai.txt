@@ -1,0 +1,210 @@
+Jamie Duncan  0:13  
+Thanks for joining us on the K files. Each week we take on a different topic in the Kubernetes community and the IT industry.
+
+Unknown Speaker  0:19  
+Depending on the week we may find ourselves knee deep in kernel headers, magic quadrants or even start a pitch decks. Our goal is to close each file with a sense of completeness and satisfaction for us.
+
+Jamie Duncan  0:35  
+Thanks for joining us again on the K files. This is the second episode in our series about service meshes for Kubernetes. This episode is gonna be dedicated to sto sto is sort of the 600 pound gorilla in the service mesh space. I'm not sure if it's the oldest but it is pretty universally accepted to be the most mature.
+
+John Osborne  0:54  
+I think linker D is actually the oldest,
+
+Jamie Duncan  0:57  
+I think linker D started like in the HPC The world like ages ago and is sort of morphed into a service mesh. I think you're 100%. Right, john, but I think linker D is older. So my name is Jamie Duncan, I'm a staff architect at VMware joined as always, by john Osborne
+
+John Osborne  1:13  
+is john Osborne, the chief architect at Red Hat,
+
+Tariq Islam  1:17  
+and tark Islam. Hey everyone, this is Tarik Islam. I'm a manager specialist with Google Cloud.
+
+Jamie Duncan  1:23  
+And like we said, this is going to be all about Sto. And when we were figuring out how to approach that because we don't want to, we don't want to have a terminal window up in a podcast because that's kind of boring. We're going to take the angle of someone who is maybe a little bearish on sto or someone who is having sto thrust upon them in an environment and it's their job to deploy it. It's their job to maintain it. It's their job to make sto successful. And we're going to talk about how to do that and why sto is why sto is sto what makes it unique in the service. fast pace and what makes it kind of unique creature? Sound alrighty guys?
+
+John Osborne  2:05  
+Yeah, sounds good. I think honestly, I think sto is one of the harder service mesh technologies to, for people to wrap their head around because it actually ends up overlapping with things like an APM tools in some cases, although it really shouldn't, because we still have an origin with stack traces yet, and other tools in other spaces like API management and things like that. So I think some people especially when they're new, they kind of have their they kind of trouble wrapping their heads around, you know, what is the boundary of something like, like a steal? Yeah, I would agree.
+
+Tariq Islam  2:35  
+That's the biggest challenge that that I've run into when folks are trying to grok what what is do is in terms of how it fits in like they get it okay service mesh, but you're also telling me it does all of these gateway type things and then you're telling talking to me about services management and security and you're talking to me about authentication authorization, so there's there's a lot to unpack in terms of this dude is extremely feature. Which I will say so, which is good
+
+John Osborne  3:02  
+and bad, right? Because I think that it's definitely the has the most features of any service mesh, but it also the gap between running Kubernetes and running Kubernetes. And sto is a pretty big gap, right? And that's where I think there's lots of room for other service meshes as well. But it is the most feature. And so if you have, you know, a need for some of those higher end bells and whistles, then it becomes a good fit. I think john uttered one of the five truth statements ever when he said, we don't know what we're doing with stack traces yet.
+
+really doing demos really well. But you know,
+
+Jamie Duncan  3:34  
+that's just this startlingly truism. Like, we never know what to do with factories. Maybe we set the landscape a little bit for sto who are who's the backer for sto like all of these projects. Now. You know, you don't get to the CNC f level even like the CNC f incubator level, without having a company who sells things for money being your backer. So who is who backs is to you like who Primary contributors, like I know and I'm going to steal tarc thunder. I know the number one is easily Google. I'm assuming I haven't gone look to get
+
+Tariq Islam  4:07  
+no thunder. That's pretty much common knowledge. We're probably we're definitely the biggest backer of it. There's obviously IBM Red Hat,
+
+Jamie Duncan  4:14  
+or is there anyone else with any kind of like I wouldn't I Google is do I see Aspen mesh Allah? What's their stick? Does anyone know off the top of their
+
+John Osborne  4:22  
+head? I'm not sure to be honest. I don't either.
+
+Jamie Duncan  4:25  
+Alright, so they're just kind of is the startup number 17.
+
+John Osborne  4:29  
+I think I've looked at I've looked at the commits, Google's was over 50%. At one point, I'm not sure if that's still the case in Red Hat contributors contributes to it as well. And we package it up with a service mesh offering with openshift. So we're definitely behind sto as well. But I think the eMERGE just hired some people from the sto project, Jamie as well.
+
+Jamie Duncan  4:48  
+Yeah, yeah, our r&d group is growing on that front pretty heavily. Being one of the architects that helps customers design their Kubernetes deployments at VMware, our threshold for adding a service mesh to that data. ignition out of the box. And we talked about this a little bit last time when Tarik was talking about you should design your systems for service mesh out of the box. But most a lot of people can't we run into a lot of the can, or just the cost to do it on the front end is higher than the benefit to have it on the front end. So we don't add a lot of service mesh. But with that said, we know we're going to down the road. So our Kubernetes experience just isn't at that part of the arc with most of our customers. I have one customer who has been using sto in prod through Google Cloud for going on two years. But that's the only customer I know of that using it every day for production workloads.
+
+John Osborne  5:40  
+The project's changed a lot actually over that time. I started deploying it when it was 03. And there was so much churn. I think actually one of the probably difficult aspects of sto is that there has been a lot of churn in the projects that he learned, you know, the initial versions, you ended up kind of having to relearn a lot of things, but I deployed the latest version Before we did this episode, and I will say that it's kind of the, the operational overhead seems a lot less than it initially was, I think when I the first time I installed it, it was 80 something crds. Right. And now I looked at it and actually looks pretty manageable. And it seems like less, that you have to kind of learn and understand to deploy it. But, Tara, you guys would Google Cloud in this long time? I mean, do you think that that's pretty accurate? Or what would you what's kind of your take on it? I think the last couple of minor versions The big focus has been you know, simplification of the control plane, the you know, service meshes in general, you have this concept of control plane data plane. And stos is to is architecture historically, has had a relatively heavy control plane where you had components like mixer which was really the 800 pound gorilla.
+
+Tariq Islam  6:50  
+Then you had pilot and Citadel for certain management, things like that. And then of course, you know, because mixer was so big, given that it was the The extensibility interface for you know, custom off and things like that. It made for a pretty complex, you know, to your point, john, you know, eight different CR DS and things like that, with one dot five, which just was, you know, released like last week, I think we've seen a lot of that come down to is God, this God component. So there's been a great simplification of the control plane. And I think, you know, you're right it is, I think the adaptability of the CEO increases inversely with the complexity of that control plane.
+
+John Osborne  7:31  
+One of the cool things I liked about it, too is they actually had this concept of profiles now where you can actually install it and give it a profile like a demo profile or production or performance profile, and then you only get those pieces that you want. And before it was kind of an all or nothing aspect to it. And since it is a larger project,
+
+Jamie Duncan  7:48  
+it is nice to just be able to install the pieces that you might need. Yeah, that's a really cool feature. I'm kind of curious tart and talking what you were talking about were in one dot five, it went from a lot of money. are a lot of smaller services into his God. Did we monolith the micro service? Yes. Yes, absolutely.
+
+Tariq Islam  8:06  
+And I manually name this since 2016, that we shouldn't be going all so heavy and to microservices. But you know, here we are coming full circle back to the monolith. And the irony of this is, you know, we always push sto, or a service mesh is really in general, as Oh, here, if you're going to run micro services you need to service mesh. What we're saying now at this point is if you want to run micro services, you need this monolith.
+
+Jamie Duncan  8:35  
+I think that there's a really interesting paradigm there though, is service sto does one thing. And that one thing is be a service mesh for your cluster for your for your infrastructure, where microservices make sense is when you have lots of reusable parts, you're not going to take pieces of sto and use them in your applications because sto is controlling the communications between all the different pods and all the different parts of your services. But you are going to reuse your author code. You are going to reuse your upload code those pieces and parts that make applications that lots of them are reusable. That's when sir microservices makes sense. Seo never was that it was always one chunk of code, doing things together in a coherent fall.
+
+John Osborne  9:18  
+There's a lot of like organizational impacts to what you're seeing there too, though, because I don't know about you guys. The weird part about service mesh in general is I see a lot of the requests coming from developers. But the way this thing gets run in production is normally there's a platform team that's dedicated just for infrastructure, and is
+
+Tariq Islam  9:36  
+turning on is to to do you know, every time you deploy a pod, it's deploying a sidecar with envoy. And that's managed by sto and a lot of the sto configurations that are coming from the platform team, and it's kind of out of the control of the application or services teams. And so there's an organizational impacts there. But the interesting part is other requests that I'll see from customers usually come more from the app. Jeff teams. So I've got a, I've got a bit of a question here. And maybe this is a broader service mesh question. Maybe, you know, this would have been more appropriate for the previous episode. But I think because we've seen this so much with sto, specifically, who owns the service mesh, then right. Speaking of organizational impact, is it the I know, I know, practically speaking, oftentimes, it ends up having to be the infrastructure operations team. But you know, with its simplicity, and the architecture, there's still also this kind of gap, I guess, in terms of usability, I mean, so it doesn't exactly come with like, you know, the greatest dashboards and user interfaces. Alternatively, you do have things like kiali, right? And a few other tools around the sto ecosystem that make it really usable and very pretty.
+
+Jamie Duncan  10:53  
+I think when you start to look at something like a service mesh, I think of it in the same ways. I think about some thing like storage, or networking. And that there is within that solution, there is a line of line of demarcation, the operationalization the fact keeping sto alive and keeping sto functional for all of its needs and features belongs to the ops team. And they usability though, the data, the configuration for the applications, how an application does service discovery, how an application does load balancing and load traffic shaping that sort of thing that belongs to the application team. And it's beholden on the ops team to make sure those features are up and available with agreed upon SLA be Kubernetes. I always use storage to illustrate that kind of line of demarcation via storage has a really clear one. The application owns the persistent volume claim, which is the request for storage. And it has to know how much and what kind and all of that, but it's up to the operations team to make sure that that storage is available for assumption, and I see service mesh being the same thing.
+
+Tariq Islam  12:03  
+That's fair. So just switch gears for one for one second here, I want to get back into kind of the architecture of Sto. So we talked about the simplification of the control plane. But the jumping down into the data plane a little bit. One of the, one of the things about issue that I think is its Hallmark is, is the concept of the sidecar proxy. So sto very early on, basically decided that envoy, the envoy proxy, which came from Lyft was going to be the sidecar implementation. Have you ever dug into this
+
+John Osborne  12:33  
+use case, it's actually pretty, pretty interesting that they kind of another custom service mesh that predates sto and it uses a bunch of like Python Jinja templates to basically run envoy at scale on AWS. It's pretty interesting if you get a chance to
+
+Tariq Islam  12:48  
+through the wall. I mean, if you look at sto or sorry envoy by itself, I mean it's it's when you use envoy alone, sans sto, you start to see what his do is striving after write, I think sto does a pretty decent job of abstracting a lot of the things that you would need to do in envoy to get it, you know, up and running. And that abstraction is akin to what you know, Kubernetes does. But I think despite the community feedback over the last few years around, you know, the complexity of the HDI API, you know, there's so many resources like the gateway, the virtual service, destination rule, service entries, etc. so on and so forth. I think you know, once you once you get up to speed with those things, it really does make sense. So I totally agreed on it, you know, ongoing, definitely it was it was created with the lift use case in mind. But when you use it without sto and then you start using Insta, you do see a huge difference in turnout, a huge difference, but a significant difference in terms of like usability and abstraction and portability. How do
+
+John Osborne  13:59  
+you think people can to limit the I won't say the Grand Canyon but elite between running communities and communities is to still feels like a lot bigger leap than it should be. What do you kind of tell customers to, you know, help close that gap?
+
+Tariq Islam  14:14  
+That's a tough one. Frankly. Maybe this is one of those patterns that we need to tease out are generally speaking, I you know, it goes back to the whole usability thing and and the ramp, right, we talked about this last episode, it's, and I don't think this is unique to even Sto. But it's certainly the case for sto that the ramp for Kubernetes is steep enough. And then on top of that, you're also going to be adding, as I mentioned earlier, you have the gateway resource, what is its relationship to virtual services, and then virtual services as they relate to destination rules? And then Where, where, where would you configure TLS right, where would you configure specific routing to specific sources then their service entries then there's custom Ingress gateways, so There's a lot to unpack there, right. But once you're up and running, the system makes sense. It's just getting there. Right?
+
+John Osborne  15:07  
+Generally, like if customers are running an API gateway, I usually start with that before service mesh just because normally the service mesh and again, these lines can be great. But service mesh usually is the east west traffic in the cluster, and then the mesh gateway usually sits at the edge of the cluster. That's not always the case, especially with Sto. But generally speaking, it's an easy way to think about it. But starting with the edge tends to make sense to people because they're already kind of familiar with that type of architecture. And everyone being on board with architecture ends up being really important for some more for but with certain aspects of changes right. And so normally have them kind of start with that and then my next recommendation is kind of to turn on some basic function probably mutual TLS inside of The East West traffic in the cluster. And then if they have the need for Canary releases that are more granular than what Kubernetes would give you, or, you know, traffic shadowing or rate limiting those types of things, then go to that, but go toward it in pieces. But normally had customers start at the edge, that's my recommendation, then you go into the East West traffic. And then if they have more advanced feature sets that they need to turn on, then move it in that direction. But I find that starting at the edge just makes sense to some people. And I don't know why that is, but it just generally just seems to be like very easy to understand and then kind of working your way into the cluster
+
+Jamie Duncan  16:36  
+outside in. I think that's how we've built networks and we've built infrastructure from the beginning. You start with a firewall and then you hang things behind it.
+
+Tariq Islam  16:45  
+It's a lot like learning a new, a new language, right? Same thing with Kubernetes. It's just start small and I think I think sometimes folks, in enterprise, it feels like Okay, I'm gonna, I'm gonna invest in Kubernetes and sto I had to learn everything upfront. Use everything upfront right now. And I think folks just need to, to John's point, especially it's, it's, you know, start start Virginia, start with the firewall, right? start with something simple and then treat it kind of all a cart. It's a platform. And with sto, you know, you're going to slowly get good with different parts of
+
+John Osborne  17:20  
+the of the technology. When you say that the virtual service is the building block, just like a pod is in Kubernetes. like to start with really understanding virtual services is kind of your day to day one, maybe destination rules. there's kind of two building blocks the platform. Oh, yeah, I mean,
+
+Tariq Islam  17:39  
+I even think that the doc state as much right, it's like, if you go into the docs for virtual services, it'll, it'll basically tell you this is this is your starting point. This is the building block, start here and then expand out virtual services, the representative component,
+
+Jamie Duncan  17:54  
+so kind of looking for that sort of lead pipe use case and we talked about this in the last Episode. And it kind of fits in here. And I really just want your all's opinion on it or whether or not it's a good one because my first idea was this person needs a service mesh. And this happened like literally two hours ago, I was talking in a in an internal Slack channel. And somebody on my team comes in and says, hey, I've got this kind of weirdo situation. And the situation they're running to is something that is feels like stuff we see all the time. We've got a customer actively engaged with them. They've taken sort of an old we call heritage application, gotten it up and running in a container. And it's got some eccentricities, it's got some weird stuff. And when in the world of virtual machines, that wasn't that hard to take care of. And in particular, this application is off, it's off to a slow start wouldn't start it up. And we will run into that right where it takes a while for an app to get running. We've all got these, you know, we've seen these big giant Java apps to take 10 minute To start up, and liveness probes and readiness probes handle that Kubernetes and do a pretty good job of it. The problem with this particular application was that it wasn't that the app took a long time to start up. There was some undiagnosed problem on the data layer on the so something to do likely with like database connection pooling or something where the application couldn't handle many concurrent connections for some indeterminate amount of time, until it got its feet up under it, and it was okay, and then it was ready to go.
+
+John Osborne  19:31  
+That's an interesting one, because that is kind of where I think a lot of the confusion comes in. Because, you know, traditional APM tool would do things like instrumenting your code and help you with you know, correlating Java garbage collection and things like that. That kind of bleeds into an SD doesn't do those things, but you know, rate limiting and those kinds of fail backs. You know what you're going to do when, when your SLO hits this and your SLA hits this You know that those types of things it does do. So that's kind of
+
+Jamie Duncan  20:02  
+right. That was the first suggestion was fix your code. It's obviously choosing their customer has no desire to do that. For you, hey, what are the odds? So we looked in like so we all went and trolling through documentation like nginx Ingress, you know, so just the Ingress controller can rate limit. Unfortunately, when it does rate limit, because it's just a, just a web proxy, all it can really do is switch you to a different HTTP response code. So it can kick a 503 or it can kick or it can actually move you like it can throw to you somewhere, or 301. You somewhere, I guess, would be the right one. But that doesn't really fix the problem. So we needed something northbound of the application that could limit the number of connections for a certain period of time and without that's, that's a service mesh, right. That's what it absolutely,
+
+John Osborne  20:52  
+yeah, grab it. I don't know if this is still the case. But at one point, the networking resource limitations in Kubernetes were If you got over a certain bandwidth, he would actually just drop all the packets. Yeah, like if he sent an upper bound for, for bandwidth, he would just drop all the packets and you know for it. So yeah, so first thing.
+
+Jamie Duncan  21:11  
+So first thing was fix your code and no desire to fix the code. second one was we'll get that person to service mesh. And the response was, yeah, service mesh isn't on the table. So we're kind of sitting there. So we're trying to what we ended up coming up with, and it's kind of novel. The only other way we could come up to do this was to have an init container that made garbage queries on the app and would write a status code until it got to some threshold that it was that was the user defined happy, and a readiness probe that went and looked for the status code. So it wouldn't sit it wouldn't accept traffic until the date of the pump was primed. That's fair, actually. It's a massive Cluj like it's total hack. But instead of programmatically instead of Have an instrument that in something like a service mesh here, we are hacking into containers to make garbage queries to a database to get the app up and running. It was thinking I was like, oh, wow, I'm about to go record this episode in a couple of hours. Like, here's this example of how to when you need a service mesh is laid out in front of me in living color. I was a kind of stunned by it,
+
+Tariq Islam  22:19  
+but it's clusion. It's maybe maybe hacky? I don't know. But this is also indicative. I feel like this is kind of a bit of a win, because this also highlights the robustness of where we are with these technologies, too. Right, right. Yeah, we know sto could should have been the answer. And the fact that they still, were able to do it with an init container in Kubernetes readiness probe. Yeah, exactly. So so that that's I would say that that's a notch on the belt for for this ecosystem.
+
+Jamie Duncan  22:51  
+That's a good way to look at it. My view is way more pessimistic.
+
+John Osborne  22:57  
+I've seen some similar things done actually to it for me, theists Where it's basically just a, you know, a number that's kind of toggled somewhere in Prometheus zero or one with you ready for traffic or with your applications can meet some requirement. And then there's something that actually is posted on a Prometheus. Oh, that's interesting.
+
+Jamie Duncan  23:13  
+That's interesting. I don't know if Prometheus was deployed in this cluster or not, I would imagine. But I have to go confirm. That's an interesting call. Yeah. And the weird thing was, like, we never quite got to the bottom of is this like three seconds or 30 minutes? Like after you spin this application up, but anyway, just an enormous garbage
+
+John Osborne  23:33  
+collection? Yeah. You'll never know. So yeah,
+
+Jamie Duncan  23:36  
+the database connection pooling was pronoun, so it may well be that just like that, the connection pools are full and it's just gonna wait its turn to get active connections.
+
+John Osborne  23:45  
+Hmm, yeah, those garbage questions can be weird. If you don't set your quality service tiers and it can't get the CPU at once. 10 second garbage collection could be five minutes, right.
+
+Jamie Duncan  23:56  
+Yeah, I just wanted to throw that because it was cut and dry. And we were kind of talking about that last week and kind of getting into here like the idea of when do I know I need one? It's when I have conditions like that, yeah. When I have these weird gray areas,
+
+John Osborne  24:12  
+I see a lot of customers to that they some of the features that was kind of basic, but actually harder than you would think. So, you know, think about a microservice where, you know, the request ends up passing through, you know, say, five pods before, you know, something's actually returned. How do they actually Treece that the request went through what five pods right? And so in tying that in with single sign on, and having like a token, validation that passes through, there's ways to do that in your application with spring and camel and all those things. But you know, having something like sto just for something simple like that, like passing an identity through throughout all the pods that it's gonna hit in an application request essentially, becomes like a basic thing that it's just really easy to turn on.
+
+Jamie Duncan  24:56  
+When I think he touched on one of the big values there. I could do that in my code. But then I would have to do that in my code for every application forever. Whereas with a service mesh laid on top, it's an intrinsic feature of my infrastructure. And if I've got 100 applications, I have 100 implementations of that solution that I then have to figure out how to manage over time. Whereas if I'm, if I'm making that part of my infrastructure, then I have one coherent way. And I don't have to write code for it. I spend more time with the code that fulfills mission instead of the code that
+
+John Osborne  25:27  
+does traceability absolutely whole lifecycle management of that dependency. One of the things that I thought was really cool about sto when it first came out that I've seen zero adoption on so maybe you guys have a different take was that sto supports more than just Kubernetes. And so you can actually plug it into virtual machines and kind of manage virtual machines side by side with a cluster.
+
+Tariq Islam  25:47  
+I actually thought that would have a big uptake. Maybe it's just that Korea is getting more mature. So people are looking to run those workloads in the platform natively. I actually haven't seen much adoption of that is that what do you guys see? I actually agree with you, I think That's that's been for a long time one of my favorite features, but I think that's, it just hasn't been adopted because folks are just so busy, you know, word association, right. sto Kubernetes Kubernetes Oh. And so, you know, I think from a provider slash vendor standpoint, you know, the three of us here. I think it's it's worth maybe, you know, reminding folks that we talked to, you know, this is this is, you know, issue specifically anyway, this is not just for, for containers, this is something that, you know, can support virtual machines as well. There's a lot of value in that. And given the ubiquity of VMs. Jamie, yeah. Care to come that
+
+Jamie Duncan  26:43  
+way. Yeah, it's literally in it's on my paycheck every two every twice a month. I think it is a cool feature. I think the one of the big reasons we haven't seen a lot of adoption, is because the VM space has existing solutions that do that pretty well. And I know I said it last week that I think I referred back to it in talking to someone. operations teams aren't going to find new solutions until they absolutely have to. If they have something that's 20 years old, that still works, well, they're going to use it. That's a great point. The number of Perl scripts still being run in production. Oh, yeah. Proof, prove me correct. Just the stuff that's been running out there forever. And so the ops teams have a way to handle that with VMs. And until someone makes them or until they have a compelling reason, internal or external. Sometimes that compelling reason is just a feature like this, like the like I was talking about, like, we just need a thing that will do a thing that my load balancers can't do. Then they'll go source that new solution. But until we push them on to that, then they're going to use f5 load balancers and H a proxy.
+
+Tariq Islam  27:53  
+I think it's gonna be a perfect storm of, I've got workloads that are just never going to get containerized and I think that you Case exists pretty much everywhere. And at the same time coupling that with we are going to move towards this new innovative platform with Kubernetes and containers and a service mesh. And I think I think that's when that specific feature as powerful as I think we all agree it is. It does require a bit of both of those things to happen. Agree, it's just the maturity issue for for that. I think
+
+John Osborne  28:27  
+it's interesting too, because there's kind of a push, and envoy and then you just do usually after it around stateful applications. So of course, like, you know, I think at its core, it's kind of a microservices platform, but there's obviously support now for Mongo and there's support coming for for Kafka. And, you know, lots of customers start to run things like Postgres and other open source based databases inside of inside of Kubernetes. And they usually have some policy where, you know, if they're using a service mesh, the service mesh is turned on. Have you ever For most part, right, but we don't, it doesn't support things like UDP, if you want to do like video streaming apps and those types of things, so I think that is probably kind of the next phase of service mesh adoption is actually getting more stateful, you know, non microservices based apps in there. Because if you look at, you know, normal, normal adoption of something, I think this is probably one of the other reasons why would VMs haven't been super popular with this to is just that, you know, the initial adopters or like the super for, for looking people, right, that are getting, you know, Greenfield apps, and then once that pulse momentum and people come on and try to get more, you know, traditional stateful apps or the things on there. So, it'll be interesting to see kind of what that looks like going forward. Some of that scares me, to be honest, because if you look at something like Mongo, or Kafka, they actually have they do a lot of things really well on their own and so shaping that traffic outside of Like a Kafka client, for instance, scares me. I'm sure there's probably people smarter than me that have good use cases for it. It seems a little bit like it could be a split brain scenario or something that ends up at least being hard to debug, I think. But
+
+what's your take on that?
+
+Jamie Duncan  30:18  
+I think you're right. I like that idea of bringing in more stateful workloads, because I think that's assuming 2020 has any goal other than just roll survival? For SDO, that's got to be one of its that's got to be one of the hallmarks of the people that are helping build the roadmap out for this thing to bring in stateful workloads where that barrier is no, it used to be that there was a hard and fast line that you could bring in a stateful workload into Kubernetes. But you probably shouldn't the whole could was could was versus should thing that's going away. It's becoming less and less painful. Oh, it's about time it goes away at night. Yeah, it should have gone away while back. Absolutely Yeah, momentum. Yeah. So we need to bring this guy in for landing this episode for landing. How about we wouldn't be close like this? How is if you've got a 32nd elevator ride with the customer, the guy that I was talking about, you know who does isn't going to use a service mesh, so we have to hack a solution. Do you have a 32nd? elevator ride with him to convince him to use a service mesh? What would you say? Or to convince him to use sto specifically?
+
+Tariq Islam  31:27  
+Geez, I don't even know.
+
+Jamie Duncan  31:30  
+Then we'll edit this part out.
+
+Tariq Islam  31:34  
+I thought it might be a fun idea. I just don't have anything for you there. I can't You can't I mean, you can't really elevator pitch sto right. It's, it's just too much. I feel like I don't know, john. Maybe john can do it.
+
+John Osborne  31:47  
+That's a punch on the spot, man. Yeah, I'd say.
+
+That's kind of a tough one. I think that if you look at some of the things that Kubernetes provides, like service discovery, and load Balancing, some of them are really rudimentary. So if you, you know, you have an environment variable, and you bake that into something, you bake that into the application into the running container, if you want to change that you're redeploying a container, right? You look at something like load balancing, you know, you're mostly looking at around Robins scenario. If you want to run something like this do, it's going to add a lot more customization a lot more granular control over even some fundamental building blocks of Kubernetes. And doing so too. You can also you know, mix things like certificates really easy, because you can, you know, enable mutual TLS by default without having to burden people with that. So I think it's kind of building on some of the rudimentary building blocks of Kubernetes. And then kind of turning on some security aspects by default. I'd say they're probably the two biggest things to me. All right. So it's not
+
+Jamie Duncan  32:54  
+so much that there's like I think tark is right that there's not an elevator pitch. You can't hit someone over the head with With this do but you can. There are just a preponderance of things that are currently in our code, or that are currently in hacky scripts and hacky workflows. Yeah, that we can bring into our infrastructures just in terms of features.
+
+John Osborne  33:14  
+There, there may be that, I think so. I think you could have an elevator pitch, if you if you knew more about the customer, like you knew that they were doing some of the stuff inside of a, you know, fat jar that's baked into their application, you know, elevator pitch is pretty simple. You pull all that burden out and just put it inside a network proxy and then inside of the configuration, right, or if they want zero trust, implementation of those types of things, but just kind of generic elevator pitch is a challenging thing. Awesome. Yeah, that's a really cool idea to the idea of, alright, just gank this.
+
+Jamie Duncan  33:46  
+Yeah, I'd love that idea of, the more, the less code I can have in my app that isn't part of my app. That's just care and feeding. The less of that that exists, the better off we are the more of that that is part of our infrastructure, the better off We all are. Maybe that's the ultimate value that service meshes are going to bring us when we get them all when we get it all put together. Is that the note we want to end on?
+
+John Osborne  34:09  
+It is I think, yeah, I think.
+
+Jamie Duncan  34:12  
+JOHN, you want to close this out?
+
+John Osborne  34:13  
+Sure. Thank you for joining us this week on the episode of the K files. Next week, we will be talking about linker D
+

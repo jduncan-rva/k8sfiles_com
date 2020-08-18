@@ -25,6 +25,8 @@ In our first episode we cover some interesting news of the day, as well as some 
 url = "2470697-episode-01-getting-started-grab-bag.js"
 >}}
 
+[Transcript](/transcripts/episode-01-getting-started-grab-bag_otter.ai.txt)
+
 {{< tip 
 title = "Visit from the Technical Difficulty Gremlin"
 >}}

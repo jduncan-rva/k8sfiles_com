@@ -13,7 +13,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 We dig down into what OPA is, how it works with Kubernetes. We focus on how to start consuming it, and some of the things that you discover about your security posture after you start creating declarative OPA policies.
@@ -21,6 +21,8 @@ We dig down into what OPA is, how it works with Kubernetes. We focus on how to s
 {{< buzzsprout 
 url = "2730940-episode-04-open-policy-agent-opa.js"
 >}}
+
+[Transcript](/transcripts/episode-04-open-policy-agent-opa_otter.ai.txt)
 
 #### Links and notes from this episode
 

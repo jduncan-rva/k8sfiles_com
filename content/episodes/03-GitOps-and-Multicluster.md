@@ -27,6 +27,8 @@ When GitOps is done well (or poorly?) it can feel like you're crossing the strea
 url = "2587681-episode-03-gitops-and-multicluster.js"
 >}}
 
+[Transcript](/transcripts/episode-03-gitops-and-multicluster_otter.ai.txt)
+
 #### Links and notes from this episode: 
 
 * Star Wars: The Clone Wars season 7 is [coming soon](https://www.imdb.com/title/tt0458290/episodes?season=7).
