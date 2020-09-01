@@ -17,7 +17,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 Service meshes on top of Kubernetes. Do you need one, and what are they good for if you already have one? In this first of a multi-part series around service meshes we ignore the hype machine and begin to dissect where service meshes should actually live in your world. 

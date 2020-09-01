@@ -1,0 +1,268 @@
+Tariq Islam  0:07  
+With an interest first, right? Yes.
+
+Jamie Duncan  0:15  
+All right, and thanks again for joining us on episode eight of the K files. My name is Jamie Duncan with me as always is tarc Islam. Everyone this is Tarik Islam. Happy to be here once again.
+
+And also john Osborne.
+
+John Osborne  0:30  
+Hi everyone happy to wrap up service mesh here. Yeah, exactly. This is our last episode focusing on service meshes. That'll be the fourth episode in the series. We did sort of a why service mesh and then sto and then linker D. Tonight we're going to be talking about two of the
+
+Jamie Duncan  0:50  
+smaller I don't think smaller is the right word, but sort of less adoption, smaller community. Service mesh is one of them very new when I'm a little more mature and then just sort of wrapping up. Finally thoughts before we close out this episode,
+
+John Osborne  1:02  
+hopefully we'll talk about the service mesh interface as well, which I think has been mentioned more recently. It came out last year, but much more recently. So hopefully we can kind of touch on that. I think a lot of people have questions as to what parts of the service mesh are included in that interface and how all that works together.
+
+Jamie Duncan  1:19  
+I think that's a great port spot to start, like john alluded to, there was something the the actual spec, or the service mesh interface for Kubernetes. Came out mid 2019 or early 2019. I think it was early 2019. Yeah. Primarily Microsoft Project Brendan Burns was it was a big proponent of it. So what exactly does the service mesh interface do? Like what it's obviously an interface, like the container storage interface or the container runtime interface, but what does it specify as part of sort of a definition of an interface for service mesh inside Kubernetes
+
+John Osborne  1:57  
+it specifies since it runs in Cuba. He's, of course, we use CR DS, you know, it's written in law, I think at this point. But it specifies a standard building blocks of various service meshes to make them more interchangeable. So you can think of if you were running, you know, multiple different types of service of service mesh, multiple different implementations, you know, could you set standard traffic control patterns, standard telemetry, policies, those types of things across various implementations.
+
+Jamie Duncan  2:32  
+So like the container runtime interface, which is the first one, the first interface sort of for Kubernetes. Back in the early days of cu, Docker was just sort of hard coded in and then they we came up with this shim that sort of let you put other runtimes in specifically rocket the core OS had been developing. And then we took all of that and made a rapid interface so that when you told when Kubernetes told the container running Time to start a container, stop a container, give me the status of a container, that instead of having hooks directly into Docker, or having this weird shim code, as long as the runtime, you know, met those requirements and answered those questions properly, any runtime would work.
+
+Tariq Islam  3:18  
+And it was necessary back then. And it's still necessary today because we're talking about, you know, some low level stuff. It's, it's, it's hardly abstracted. And I think, I think this the CRI the CNI, the container network interface, this storage interface, these low level things. I mean, it makes sense. So the question I'm posing to you guys, when we're talking about the SM is the service mesh interface. What are we doing there? It's an interface for an abstraction. Or maybe it's an interface for an abstraction of an abstraction. So functionally speaking, I'm just trying to figure out what's what's the need, right? So I guess yeah,
+
+John Osborne  3:58  
+answer me this. Why service mesh interface? Honestly, I struggle with that a little bit. Not that I think having standard interfaces is good. In general, if you look at kind of Kubernetes, and the conformance program, right, where you can take a workload that as long as you run to these Kubernetes, primitives and these these API objects, they're gonna be portable, any any distribution, right? As long as you stick to what's part of the conformance program. Part of the value there is that no matter what distro you're on, for Kubernetes like 90% of what you do is going to be included in the for your workloads, at least are going to be included in that conformance program right the deployments are gonna look the same on every distro the pods are gonna look the same on every distro, but the persistent volumes, etc, etc. Because that was built in from scratch. I think one of the challenges that SSI has is that you know, we talked about sto as being the clear leader in feature And then, you know, we think to be linker D is the clear leader and usability but not as many features. And kind of the different philosophies there. He talked about that in a couple last episodes. But since they're the service mesh interface came out, in some cases a few years after those, it's trying to create a standard interface across multiple distros that are already pretty different, right? And so I think that's kind of the challenges is not building that interface in from the from the beginning. And now we're kind of trying to work backwards a little bit on it,
+
+Jamie Duncan  5:34  
+is we're talking about telemetry primarily. And we're talking about a standard way to speak telemetry in and out of a Kubernetes cluster, to tell a Kubernetes cluster, how to route traffic. So it's what traffic split traffic search, telemetry, and then what's the fourth thing and the semi
+
+John Osborne  5:56  
+encryption i think is part of it as well.
+
+Jamie Duncan  6:00  
+like the idea of there being a standard sort of set of hooks, or a standard way to communicate the needs of a service mesh, I do have a little trouble calling it an interface. I actually
+
+Tariq Islam  6:13  
+wouldn't call it an interface. It's it's a baseline right here. Here's how I see the SMS line. And this is maybe one of the first takeaways for this episode is that for folks that are looking at SSI and trying to figure out okay, how does this fit into my overall strategy?
+
+This isn't an interface so much as a here's here are table stakes for what a service mesh should do. Right? We've covered linker D, we've covered sto we're going to briefly review OSM and console today. But I mean, they all do these things. And SM I think it's actually catching up to the level of maturity that the other service meshes have already been at for quite a while. But again, it's it's just a definition for stable table stakes. And that's the thing that's where I where I also struggle in terms of whether or not this is falling in line appropriately with something like this.
+
+CRI the CNI, CSI, which actually, you know justifiably exist.
+
+Jamie Duncan  7:04  
+Yeah, I think of it more of a specification than an interface.
+
+John Osborne  7:08  
+What's your take on even the need for multiple service meshes because of, you know, we talked about, you know, kind of the main to the main two paths, at least that I see for people to adopt service mash, which is, you know, you, you're running all these things, and you're creating these these fat jars from a centralization perspective, and you're managing all your custom policies for your organization and these fat jars and distributing those out. And those have their own lifecycle management issues, especially with those and you want to abstract that into a service mesh. And then the other one was that you realize that you need centralized policies and so forth. And so you haven't built the fat jar yet you skip ahead, essentially, to the service mesh, but, you know, in with both those kind of paths is the, the need to standardize on a single way to do things right. And so What's the path to having standardized but then standardize on two separate service meshes of ways to do that? What's the
+
+Jamie Duncan  8:11  
+I'm surprised there are a few is there are
+
+Tariq Islam  8:15  
+you mean service meshes? Yeah. I feel like we have, I feel like we have a good mix at this point. I mean, any, any more than, you know, treating them like we can plug and play them through an interface that is more of a specification? I, I think it's solving it's a it's a it's an answer to a non existent problem. Um, you know, I think we've mentioned we've talked about this on an earlier episode, I forget which one, but we'd mentioned that, and I think this was Jonathan mentioned this, but we're eventually going to get to a point where the service mesh itself is really just kind of an under the under the under the rug implementation detail, and it definitely should be for devs right? Yeah, exactly. And maybe not even just devs. But to a degree, even the SIS ops folks that are managing the platform, you know, whether it's setting up SL O's and different, you know, things that they want to do with telemetry data coming back.
+
+Jamie Duncan  9:13  
+I think the service mesh that's in use, again, as long as it's following the spec, whether that's a semi or whatever else it is, I think that's going to be enough as long as as long as it's, it's doing what is expected of a service mesh, against the spec. And, and that's it, let me just use it. I think it's, ideally it goes the way of the container runtime. And I know there are folks have strong feelings around container runtime, even even in 2020. But I think I think it's going to go that same way. And there are there are use cases where a specific container runtime does provide you a benefit in certain scenarios. And your architects and your systems engineers need to understand those differences, your developers developers need to know what to container and needs to know works with your ci CD, like your sis ops need to understand the telemetry coming out and which knobs to turn to alter that and capture it properly. 100% agreed. When I was saying I'm surprised, we didn't have more, I was thinking more along the lines that we come out of all of this comes out of this sort of Linux Uber ecosystem. And Linux is famous for giving you 17 ways to shoot yourself in the foot, which is, you know, great until you have 12 holes in your foot and five things left to try. So I'm just surprised that you know, like, in the, in the 90s, there were 600 Linux distributions. You know, after that there were 57 different OpenStack distributions, and now everyone has is has built or is building or has built and tried and failed to build their own Kubernetes platform. I'm surprised there aren't 50 service meshes that do very specific, very oddball things that are in or out of the spec. I'm just surprised by it. I thought there would be more
+
+John Osborne  10:59  
+I have seen some handouts that I never saw mentioned again. So there, there might be 50. But we're not talking about two or three. Yeah. And flash Yeah. All right. So looking back at other interfaces, and thinking about interoperability. Now, we talked about Kubernetes, as being very interoperable is from an application workload perspective, you know, but I think of je to, you know, back when when GE promised that we could take our Java apps and port them between any any application server that implemented the je spec, right. But the reality ended up being with G that it was more about lowest common denominator of an interface and all these other vendors like IBM and Oracle and Red Hat with J boss ended up iterating and providing a lot of functionality that wasn't in the spec. And so the workloads were not portable at all right because a lot of times If you had to rip out code or libraries, or there's just other configuration changes that need to be made, when you look at the SMS now, I think because it came out several years after this, do linker D, some of these other purpose built service meshes, that it's definitely a lowest common denominator of the interface now. Now, I think one of the things that we learned from from cloud service providers over time, and Microsoft's really big behind this, this interface is that, you know, the cloud service providers can release something that's, that's not maybe the end state, right, because they're gonna keep iterating on it, but they have the big resources to keep iterating on it, they might make something that isn't great. You know, today, good tomorrow, right. And so I guess, I don't think there's really a question that estimize the lowest common denominator now, but question over to you guys. is, do you think it'll be the lowest common denominator in a year or two? Or do you think that it'll, it'll end up iterating and catching up with at least the 80% use case of a lot of the other service mesh implementations that are out there.
+
+Tariq Islam  13:05  
+I have to go back to my earlier comment and say that I think as a spec, it's nice, but it's best case nice to have I don't think is it? I don't think it's a decision point, frankly. I mean, I get why je did it. But if you look at what happened after the fact, as you just mentioned, john, I, it just didn't matter. Right? It did cause some enterprises and organizations problems around portability. Yes. But you know, I just don't see given where the service meshes are today between linker D console. sto and some of the others. I just, I just don't see them kind of almost not not backtracking but coalescing around the single speck as as the least common denominator. I just I just don't see That happening. And then there's, there's no good reason today for that to happen because this is not. As we mentioned earlier, this isn't like a, a, you know, it's not the container runtime that we have to worry about and deal with low level things. It's just an abstraction about how you want to manage and secure your services. So pick, pick the one you want, and it's going to probably do most of the things that you need it to do.
+
+John Osborne  14:25  
+So do you think that it's a solution without a problem?
+
+Tariq Islam  14:29  
+Yes, I would say that, and I'm not again, this is not a knock on it. I think we do need a spec because there should be a target to shoot at, or shoot for, I should say, but I just maybe in a few years, I'll be you know, eating my words here. And we'll be talking about how we really need a spec or how having a spec really saved us. But right now, I just don't I'm not sure seeing that.
+
+Jamie Duncan  14:57  
+Yeah, I mean, I think there's enough Common Law that we don't need the codify law.
+
+John Osborne  15:05  
+That makes sense. Well, it makes sense. I mean, if you think about some of the, a lot of times when we think about what's the valid use case, we think about our individual project or teams. And there's definitely, at least from my point of view, a lot of, especially in large organizations, centralized it groups that are, you know, be frank, they're worried about shadow it right. And some groups that they, you know, back when anything was on premise, it was fine. Everything was, you know, VMware or bare metal or OpenStack, or whatever. And then moving to cloud, they have some groups that want to run in GCP, or Azure, or some other ones that want to run in AWS, some other ones that want to run on premise. And they end up trying to create abstraction layers and Kubernetes really helps there. Do you see a need maybe in that scenario, where there's a centralized it group, and you know, one of the teams they support wants to run linker D Another one wants to run sto another one wants to run, run one of the cert the API gateway specific ones like calm. Do you see that as a as a need? Where service mesh could potentially help? Or are we still just kind of grasping at a solution without a problem solve?
+
+Tariq Islam  16:19  
+Yeah, I think that's exactly it. Sorry, Jamie. Go ahead.
+
+Jamie Duncan  16:22  
+Yeah, I think it's somewhat you may run into some cases at some point in some large organization where you need a it's I the way you describe that I feel a lot like when I was an everyday engineer, and I was forced to go read an RFC paper, to define the law, when to when opposing people wanted to do things that were just outside the realm of norm. And one of them you know, we had to sell it, we fell back to an RFC. My favorite was the the RFC that define the Linux file system hierarchy because people like to put stuff in stupid places on Linux servers, and it will cause things to break. So I think there is a there will be a time when people want to run opposing things, or people have different opinions. And that in essence, that smmi on paper could be that arbiter of truth. But there's so many business scenarios, there's so many business decisions that could substitute for that. Mm hmm. That it's just not. I had
+
+Tariq Islam  17:30  
+trouble. I have trouble even with that, right? Because we're not talking. I mean, when you're talking about RFCs, that's one thing. But if multiple let's say we do arrive at a point where large organizations are, you know, have lines of businesses for example, that want to run different service meshes. What is what is an RFC like thing or a spec going to do when we already know that the different service meshes no themselves. Going back to your comment, Jamie about having a common law already. I mean, we're talking about basic, you know that it's just that these service meshes, I've already defined the table stakes themselves, there's only so many things that you need a service mesh to do. And for a service mesh service mesh to be qualified as a viable service mesh, it has to do those things. And every kind, everyone kind of knows that, right.
+
+Unknown Speaker  18:27  
+So I'm going to double down on that common law
+
+Tariq Islam  18:30  
+term that you mentioned. And just state that even if that scenario arises, I still don't think we need a spec for something as abstract as a service mesh. We're talking about capabilities, right? Can I observe my services? Can I secure my services? Can I run traffic? Can I can I allow traffic? Yeah, I mean, this is stuff that API Management gateways have been doing for years and years and years. We're just, we're substracting back in a different way for Kubernetes And I just don't see a there wasn't there wasn't a need for an RFC back then, for gateways and API managers, there isn't one today, I don't see a need for something like that for service meshes either. It's just not low level enough.
+
+Jamie Duncan  19:15  
+Yeah. So let's, let's pivot a little bit and get into the first of these, the the two service meshes we're going to look at. And let's start with the one that is sort of at the heart of smmi. The I what I would probably call the spec implementation of the of the semi, and that's open service mesh, which is very much a Microsoft backed project. That is they have promised to donate to CNC F at some point they really they kill me with that name, right? Because Red Hat like what we run on an open ship is called Open shift service mesh OSM and they're they're calling there's open service mesh. I hadn't even thought about that. So you know, knows where you're out. In our industry. Yeah, exactly. hadn't even thought about that one. So it is very new. OSM is like it was the initial it's still in. It's still in alpha, is that correct? all of its API endpoints are if it's not, if it's in beta, it's in very new technology. Initial releases were late 2019, or even early 2020, the ones that would actually do stuff. And it is a service mesh. And if you look at just we talked a lot about when we're talking about linker D, that initial usability, that sort of how easy is it to get up and running? OSM wins? Oh, yeah, like is it is the simplest sort of the service meshes I've investigated. It is far and away the simplest to deploy. You pull a binary down on GitHub, and literally run the binary with the install parameter. And it reads your existing coop config to tie to that cluster. And so as long as you've got the ability to you know, your as long as your coop config for for that shell session is valid and is pointing to the right cluster. About three seconds later, you've got a deployed service mesh.
+
+John Osborne  21:07  
+So if you are running on Azure, would you would that be your go to or would you run? You know, one of the other service meshes? I don't know.
+
+Jamie Duncan  21:17  
+I'm looking at the feature set, like like Tarik was saying, like, what do you expect a service mesh to do? You expect it to provide telemetry to split traffic to search traffic, and to do some encryption. It does those things. I would, I would be curious. And you know, just with living life, we didn't really have a time to put these up against one another and run like workloads against them. I'm assuming because it's newest, that it's the slowest. Although there's, there's that's just completely anecdotal. You know, more mature code tends to be a little more efficient, but it could be really well created. It could be incredibly high performing right now as it currently exists. But I'm assuming it's the slowest. So I don't know if it would be my default. My thought is, and I did a little before I, before we started recording, I was looking through social media. And Microsoft is putting a lot of marketing effort. And I'm assuming marketing dollars behind getting a community behind open service mesh to make it a viable thing.
+
+Tariq Islam  22:23  
+I don't blame them. I mean, they have a lot of catching up to do, right years of catching up to do
+
+John Osborne  22:29  
+they have a lot of their more more visible engineers are working on it. I would say as well. So it's definitely I think, really shows it's a high priority for them.
+
+Tariq Islam  22:40  
+I think they'll they'll make this successful as far as service mesh success goes, just by sheer will,
+
+Unknown Speaker  22:46  
+of the weight of Microsoft behind it.
+
+Tariq Islam  22:50  
+And, and I'm sure they'll develop a robust community around it as well. But at the end of the day, all said all things said and done. It's going to be you Add another service mesh that does all the things that you needed to do.
+
+Jamie Duncan  23:03  
+Yeah, it'll be folded into an implementation.
+
+Tariq Islam  23:06  
+And and what we talked about last time, it's going to come down to, you know, vendor ecosystem supportability the things that enterprises, you know, truly care about in terms of consumption and adoption is what is the service mesh that happens to come with this platform that I've chosen?
+
+Jamie Duncan  23:25  
+Yeah. And I think that's where we'll see OSM. I think, Azure, I think OSM will be the default at some point in the relatively near future. If you use Azure Kubernetes or you deploy in either future sort of coop centric products you'll get OSM
+
+John Osborne  23:43  
+after the last episode, I was actually thinking about what we were talking about, you know, with usability and upgrades and a lot of that stuff and you know, if you think about service mesh, I think it has a lot of any technology maybe the low because it is everywhere universal in your cluster. As maybe the people are gonna have the lowest tolerance for breakage, right? And so they're gonna have to if they can build up trust over time and make it a frictionless experience to upgrade, then I think it has a lot of potential. But I think people get hair triggers to rip the service mesh out of the platform if it if it breaks your cluster, right?
+
+Jamie Duncan  24:23  
+Yeah, it's it's an implementation detail, but it is mainline code path implementation detail. If it goes sideways, your app goes down. And that's just a there's a 100% chance of that. I'm bi is very tied to the Azure ecosystem. Microsoft is doing a lot of publicity around it. There's some articles where they they hired people to have opinions. And they're no one is doing anything over as overt as gunning for any of the other ones with obviously sto being the target. But some of these articles go pretty far afield like saying that, you know, it's just amazing to me there's this one article it's out in one of the the paywall website and there's some some guy who's paid to have an opinion, I'm sure he's being paid by Microsoft for this particular opinion where he's literally saying, you know, big because of political decisions about service meshes. companies may stop, throw away the thousands of engineering hours they've invested in integrating those service meshes into their products and do something completely different. Which has happened exactly zero times in the history of capitalism. And it's the angle that they're that it's a an angle that they're going with me because I read this article and I read it again right before we started recording like do you not know how the world like how Number one, pulling a service mesh out of a product that you sell for money, it would take thousands of hours, minimum. And number two, nobody's going to make that decision because it's just throwing away money. It's you're beholden to stockholders, and you're not doing right by them if you did something that stupid. I'm not a fan of that tactic. But, you know, I like the idea of, I think that vendors are going to settle or have settled on their service mesh that they can optimize for their environment so that they can optimize for their default workflows. And I think that's what we're starting to see. And we're starting to see that with this do we're starting to see that or we will start seeing that with OSM as well.
+
+Tariq Islam  26:45  
+And I think that that that's okay. Right. Yeah. Again, it's what's what's the service mesh that happens to come with my platform of choice. And so the decision becomes more about it, the decision becomes platform level. Right? It's It's a, it's a lot more elevated than that no one knows no one is going to make a decision to spend X amount of dollars because oh, you're using an smmi reference architecture or you're using linker D, or you're using Sto. So that's the one that I'm going to go with this is just not I mean, again, going into the future, I just don't think this is a an enterprise decision point.
+
+Jamie Duncan  27:21  
+No, no, it's a very important implementation detail for the engineers designing systems.
+
+Tariq Islam  27:25  
+Yes, because they're gonna have to be married to a specific API, DSL, whatever you want to call it, but and that's fine. That's okay. But
+
+John Osborne  27:34  
+yeah, that's where it stops. The implementation details important because if you can make it a frictionless experience, then you get people using the technology. And then before you know it, it gets into production, right. And so having an initial experience that is really frictionless is important. And if they make it a frictionless experience on Azure, than I would expect that to be one of the most common implementations of a service mesh on Azure. And they'll have to go outside the SMP spec to do that, which will be interesting though, because they'll have to start tying into Azure primitives and other integration points, right? To really make that happen. They're gonna have to start tying into Azure identities and active directories and all those types of things do.
+
+Jamie Duncan  28:20  
+That'd be funny, they'd have to break their own spec to Yeah,
+
+Unknown Speaker  28:23  
+experience. Well, if you think about like a hashey Corp, that happens all the time and comes
+
+John Osborne  28:29  
+what you think about terraform, right, or one of these tools where it's a, it's a consistent workflow. But the way you talk to AWS, the way you talk to GCP, the way you talk to Azure using terraform is different, right? It's just the consistent workflow across the clouds, maybe so maybe the service mesh interfaces is more of that workflow, and not necessarily that you can pick up and drop in your service mesh interface, you know, CRM, into some other implementation. Everything's just
+
+Jamie Duncan  29:02  
+kind of magic. So OSM is very new, and is very Azure centric. The other one that we want to touch base on tonight is hashey, corpse service mesh console. I don't know much about the history of it. It's been around for a while. it leverages envoy like, like sto does. It's, again, I was kind of looking at the social media route before we got going and there aren't a lot of people talking about console. Really good I could find on social media. So it's running pretty quiet right now. It used up a lot, especially when Kubernetes first came out. And yeah,
+
+John Osborne  29:47  
+I got the question a number of times like Okay, can I use Kubernetes but actually want to rip out that CD and use or I want to run console on top of it as my as my persistent key value store or
+
+Jamie Duncan  29:59  
+is not Not current reality, like literally like, I sent out a tweet on the on our Twitter handle. And it was it was on the first page of results. I think I found it because console is a little bit of an overloaded term there. It's a very political term like it's used in politics. And it's also a very historical term. So looking for that word, you got a lot of false positives, but I went to like page 17 of search results and found maybe three people one of them being us talking about console in the past six, eight months. was not getting a lot of press right now.
+
+John Osborne  30:42  
+I bet it is in print. It doesn't seem to be iterating a lot, but I bet it is in production. And if you guys just because it can do like basic load balancing and service discovery and those types of things. Okay.
+
+Tariq Islam  30:54  
+I think the benefits that they enjoyed not just being one of the first To market, but I don't think they were billing themselves as like as as a service mesh the way you know, the other service meshes are billing them selves a service meshes. And I say that in the sense that console treats VMs as a first class citizen, and the way they've architected things that they're integrating into Kubernetes. But they take a more. And I hate to use this term again, but they take a more abstracted view of what a service mesh means. And I know, you know, stos has support for VMs as well. But they were their their their approaches, I think, almost almost at the the not quite at the level of API endpoints in terms of service discovery, and controlling, routing and traffic and things like that.
+
+John Osborne  31:53  
+Okay, is it fair to say that console is more for developers because when I think About service mesh in general, I think about, you know, taking a lot of the things that's out of Netflix OSS and the developers, we're rolling and moving them more into, like operational policies and, and things of that nature. And at least in my experience, people always asking about console, we're more developers that just didn't want to install a bunch of stuff. And you had that initial service discovery load balancing those types of things. Out of the box, so is your was your take on it more developer centric than just a normal service mesh?
+
+Tariq Islam  32:34  
+I didn't see this. I didn't see. I didn't see this as a developer, but I have where I've seen it. I've not seen it as a developer play. It's been. It's primarily been sis ops folks that have used it Really?
+
+Unknown Speaker  32:47  
+Yeah.
+
+Jamie Duncan  32:49  
+My take on it. So I deployed it today. I deployed both of them on a couple of clusters on a VM. We're OSM had You won the gold star for easiest deployment console in, uh, without anyone being anywhere near it. Got the they got the trophy for hardest deployment experience. And it is based there their default workflow runs around helm, which is, okay. It is what it is, I hope like we were talking about it for recorded, you hope they go they go away from that. You can pull it down and deploy it yourself straight out of the GitHub repo that does work. But like you, it just feels like the the day the installation experience and we've talked about that for all these service meshes. The installation experience is five or six years old.
+
+Tariq Islam  33:44  
+Yeah, it's the fact that it centers around Helm bothers me. You know, configuring it after installation, again, goes through the whole workload goes around man, I'm not knocking helm. Just saying that i think you know, given the way the other Service meshes have built their experiences. It just feels more natural within Kubernetes. And I think I don't actually i don't know if i fault hashey Corp for this. Right? Because console has been around before it was a thing for Kubernetes. And so their usage of Helm was probably just path of least resistance. Well, and I think they haven't caught up.
+
+John Osborne  34:31  
+It's a mature technology to and I think that people's standards for installation and ease of use have grown over time, right, like people are just have less of a tolerance for slinging around a bunch of ammo these days.
+
+Jamie Duncan  34:45  
+Yeah, certainly. Once I got it deployed, I deployed and so for all of these service meshes I did the simplest coop cluster I could and then ran their example app and looked for functionality just kind of felt around it a little bit. Once I got it going, it did seem to do everything. Right, it met the requirements of being a service mesh, doing a little more reading into it. And I didn't get this far I didn't have time. integrating with other tooling seemed to be, again have sort of a four or five year old experience. Like if you wanted to, like hook it into Prometheus and do extra and do stuff that we kind of take for again, like john said, like we take for granted with with any tooling now, do you mean to say when you say 45 year old experience, do you do really mean to say a pre Kubernetes native service mesh experience? Probably Yeah. Yeah, that's, that's a much more professional term to put on it.
+
+Tariq Islam  35:48  
+I say it that way, because because the the Kubernetes native one, the ones that were built for a purpose built I guess for, for containers in Kubernetes. They they kind of they took advantage of a lot of things. and lessons learned in that specific ecosystem wars councils coming in from a different point. Right. And so, linker D.
+
+Jamie Duncan  36:09  
+produced Eddie's pretty
+
+John Osborne  36:13  
+well, linker D two was rewritten, right?
+
+Jamie Duncan  36:15  
+Yeah. Fair enough. Yeah. So linker D, why didn't deploy the one dot exe. So it may, it may feel a lot like console or even more, you know, laborious to deploy. There was nothing wrong with it. You know, it did what it said it would do. But I had to go and handle a few more files, I had to go and do a few more steps to get it to do the things that that I just assume it should do. I've gotten lazy in my Kubernetes days, that it should do out of the box, or with just dropping, you know, dropping a config map into an existing into into a namespace.
+
+Tariq Islam  36:51  
+Now again, I think that goes back to the fact that it's not predicating itself on Kubernetes whereas the other ones are.
+
+John Osborne  36:57  
+mean generally when I think hashey Corp, I think at least Easy to use from from day one, right like with you think about terraform it's a lot easier to use than some of the cloud native primitives. vagrant for all its issues, very easy to use day one, right? You know, vault has been more easy to use maybe some some, some issues in Kubernetes. I think they've kind of, they've solved those over time. And then, you know, console, at least from my initial experience with it, when I when I used to back when and why developers are picking up is that it was, you know, did a lot of things and you didn't have to install them. Alright, but it sounds like what you're saying is kind of the maybe the investment hasn't been there over time to kind of keep up with all the iterations of Kubernetes and the ecosystem and they've been more focused on some of the other products in there. And their flow because I when I think hashey Corp, I think easy to use, or I assume it's going to be easy to use, like they have that kind of built up that trust, I think with a lot of their users.
+
+Jamie Duncan  37:55  
+Yeah, they certainly have. Yeah, it just did. Get the warm fuzzies like I got with sto or linker D or even OSM,
+
+Unknown Speaker  38:04  
+but you also can't fault them for anything. I mean, it's it works. It does the things that you need it to do. Right. And it certainly wasn't deploying OpenStack. Seven.
+
+Jamie Duncan  38:16  
+It wasn't, I didn't insult my mother at any point of the deployment process. But it just wasn't on par with the other ones we looked at. Which was not what in like you said, john, I kind of expected I just, I thought maybe I could just think console and it would deploy itself with the reputation hashey corpse tooling has. And that wasn't the case.
+
+Tariq Islam  38:39  
+Maybe they're just solving for problems that they're actually seeing that they've actually seen in prod, because they've been around a while, right. And if you look at folks that are adopting service meshes, it's an 8020 80% of the features really aren't being used.
+
+Jamie Duncan  38:53  
+The two people from hashey Corp that are gonna listen to this are sitting there thinking, you know, dude, we seen some shit.
+
+John Osborne  39:01  
+See things?
+
+Tariq Islam  39:03  
+You guys is your mouse?
+
+Jamie Duncan  39:08  
+Yeah. Tarik, do you want to do you want to bring us home? Yeah, yeah, just a little two minute recap of these. What we think with service mesh is going from the first the first up until now.
+
+Tariq Islam  39:19  
+Sure, yeah, no, we spent a good amount of time a number of episodes here talking about service meshes. It's, it's a big deal in the community. It's a big deal for enterprises that are, you know, going down the route of modernization and Kubernetes and containerization. We covered sto the most feature rich, probably ostensibly the the most mature in terms of capabilities and its surrounding ecosystem covered linker D ease of use, not quite as feature rich as sto, but absolutely a major major player, another 800 pound gorilla, and I think they're gonna go really, really far in a very short period of time. So they're there one to watch. For sure, and their adoption is, as far as the data goes, their adoption is right up there with this deal covered OSM in console today. And then we talked about the spec. I mean, I think that the take of the main takeaway here is that the service mesh is is is going to fade away into the background. And I think that's where it belongs. I don't think that it's ever going to be a decisive factor except for the most niche use cases where it needs to be a deciding factor. And even then, it's probably going to be a political issue. And for that matter, it's never going to come down to well, which of these service meshes follows a spec or which of these service meshes has the right governance model or belongs to a foundation, there's been a lot of noise about that in the community. Bottom line, you know, pick the platform that works for you. It's going to come with a service mesh, and chances are 99% of the time that service mesh is going to do everything you needed to do and it's going to be an implementation detail and When it's not, you'll deal with it then. But I just don't see it happening to the degree that, you know, everyone's everyone's getting into a tizzy about but there's a lot of noise around service meshes right now but thing to take away and that the signal that I want to tease out for everyone is figure out your SRP practice, figure out how you want to monitor and secure and maintain your services and pick pick the platform that has, you know, a demonstrably good service mesh, maybe it's the one of the ones that we talked about, maybe it's not, but you can end up using one and and just make sure that your folks gets killed up on and they enjoy using it.
+
+Jamie Duncan  41:36  
+Very cool. JOHN, anything you want to add to that?
+
+John Osborne  41:40  
+Yeah, you know, one of the things I really like is is thoughtworks has this radar. I don't know if you guys track it, but it has this radar where they attracts technologies and it kind of labels them as adopt, you know, trial, assess or hold. And no since we covered a lot today, I thought maybe we'd put some of those technologies into the into the bucket. You know, I think we both had sto and linker D is probably an adopt phase, I think, from what we talked about and heard, you know, I think would probably put the service mesh interface into the assess phase. And it sounds like OSM is very new. So you might want to do a trial of it and I don't know where you guys would put a console since you've used it more recently than I have as well. But I think it's it's nice to put things in buckets after after we kind of chat about it for a while.
+
+Tariq Islam  42:30  
+Yeah, I have service mesh fatigue. I'll tell you that I'm sick of talking about service.
+
+John Osborne  42:34  
+I am excited to move on to
+
+Jamie Duncan  42:37  
+john, what are we going to cover in the next episode episode nine What do we want to cover?
+
+John Osborne  42:41  
+So I don't know you guys but I've had the cK cK D certification in my backlog like just take the test knock it out for like three years. And it's never real cuz I haven't signed up for the test. So I thought with a lot of people at home, you know, try and get through Patients are caught up on things that we would that we would take it, we would. And kind of report back what we thought were the best. I've been keeping a log of a lot of the, the, a lot of the materials that are out there for free, right and, or low cost, like some of the stuff on Udemy or those other things. So, you know, we could, we could report back what we thought the high value, add items were to to pass these, these exams.
+
+Jamie Duncan  43:27  
+I think that I actually just started, we decided, I decided for my role at Google. That's something I'm actually going to do. So I think I may take you up on the on the bat to see if we can knock that out here in short order. Let's do it. Yeah. So we'll talk about some certifications in the Kubernetes world here in just a few weeks, and maybe one of us will have passed or failed an exam by then.
+
+John Osborne  43:49  
+If anything is better than not taking it right.
+
+Jamie Duncan  43:53  
+Exactly. Yeah. Until then. Thanks again for coming to hang out. Come and hang out with us and listening and talking about Service meshes. Thanks a lot, everyone. All right.
+
+John Osborne  44:02  
+Thanks everyone. See in a couple weeks see
+
+Transcribed by https://otter.ai
