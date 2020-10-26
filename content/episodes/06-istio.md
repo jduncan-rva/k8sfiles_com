@@ -13,7 +13,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 In our second episode on service meshes, we start to peel back the layers of complexity and myth around Istio. We talk about how the latest Istio release returns to its monolith heritage, how it all glues together, where to start, and we toss in a real-world example of an application whose screams for Istio go unheard by its creators.

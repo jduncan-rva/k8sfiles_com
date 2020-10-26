@@ -1,0 +1,370 @@
+Tariq Islam  0:07  
+We do an interest first, right? Yes.
+
+Jamie Duncan  0:14  
+All right, and thanks for joining us on episode nine of the K files. I'm Jamie Duncan, customer engineer for Google Cloud with me, as always, is torque Islam.
+
+Tariq Islam  0:26  
+Hey, everyone, this is Tarik. Glad to be back
+
+John Osborne  0:28  
+and kick us off tonight. JOHN Osborne, Hey, everyone, this is john Osborne, here to talk about certifications, and failing them and passing them. everything in between. So he did a little bit of both over the past.
+
+Jamie Duncan  0:44  
+Yeah, so it's been, it's been what, five or six weeks since we recorded our last episode. And in that time, you've earned two certifications, you took one of them a couple of times, and then you've taken another exam, and you haven't gotten a score back on yet. I took two exams, and have a third one coming up here in a couple of weeks. So we've been pretty busy. We wanted to talk about certs. And well, we decided to put our you know, to put our brains where our mouth was and try to get down to the bottom of this.
+
+John Osborne  1:15  
+Yeah, I think to like, it's a good timing, because if you look at the Linux Foundation for like the ck cert, there's there was changes that came out in September. So you know, it kind of invalidated some of the things that have been the existing materials have been out there. Same with the CKD. And then there's a new certification exam coming out next month, which I took as part of the beta program called the certified Kubernetes security specialist exam. And that's the one I haven't gotten back yet, because it's still in beta. So
+
+Jamie Duncan  1:47  
+awesome. So give us give us a little bit of an overview about what what is the ck a in the CKD? Like, what's it like? Because I'm taking mine in two weeks, I had some scheduling issues, but you've taken them both?
+
+John Osborne  2:02  
+Yeah, so I think, you know, the, in terms of topics that it covers, you know, it covers the cluster architecture, the installation, a lot of that's cube ADM based, which worked out for me, because you know, I happen to like cube ADM a lot. The services and the networking, so things like you know, how pods talk to each other, and how you expose services.
+
+A little bit about the DNS, there was a troubleshooting aspect to it, you know, where where to look for the log files, where to you know, what services to start. Overall, you kind of need to know the flow of things. And then there was some things are in scheduling,
+
+config, maps, secrets, some of those types of things, storage, all the cluster components, like the things that an admin would need to know, essentially. So knowing you know, how things get scheduled how to make backups with Etsy D restores with that CD, those types of things. Anything that your your typical, like operations person would would need to know, volumes, storage, all those types of things. I felt like the there was a acid aspect to it, it's all hands on. You know, it's it's very much like if you've taken any Red Hat certs, it's a lot like the rhcp. So there's no theory involved. So if you know, you know, if you know how everything works together, that's not as not as valuable info is actually how to, you know, run the commands to generate all the manifest files and apply them right away. And a lot of it's about time management. And that's really where I seg faulted on the first exam, which you know, I can can, I'm happy to talk about because I actually thought it's a good learning experience.
+
+Jamie Duncan  3:51  
+So, like we were talking before we got started. And like when you start looking around for people that like when they pass their cert, their certified Kubernetes administrator exam, they say, I've been studying for 10 months, or I've been studying for six months, or I've been studying since I was five.
+
+Unknown Speaker  4:07  
+Yes, exam my whole life.
+
+Jamie Duncan  4:10  
+Right, I came out of the womb with the seat, wait, you know, with the Sybase course in my head? Or Udemy course? What changed? You said there were some big changes a couple months. So a lot of people that have been sort of slow burning this prep. They got turned on their head in September, like what were the big changes?
+
+John Osborne  4:27  
+I think the biggest change was that they reduced the hours that you have to take the exam from three hours to two hours and then they also cut cut down the questions and they also hear evil. They did, they did make the the percent you need to pass lower. So I think you only need to 66% to pass whereas you need to 74 earlier. I will say like it's pretty low. It seems like it but they it's all about time. Time management, so you're probably not going to answer every question. And I think it's like, I assume it's a computer grading it because everyone I've ever heard about passing, it has always generally felt like their, what they felt like they got was like 15%, lower than what are higher than what they actually got. So if you got an ad, if you felt like you got an ad, you probably just passed at 66%. But also, in the previous iteration of the exam, from what people had said, was that they put some really hard questions on there. I didn't feel like personally, that any of the questions were crazy difficult. It was more like just the time management aspect of it. You know, if you think about two hours, hundred and 20 minutes, I think there's 17 questions or so. So, you know, that's going to give you about, you know, six to seven minutes a question. So, but there was some questions on there. Some of them I answered in a minute, but then some of them were, you know, there are 20 minutes to answer, probably. So it's more just about the time management aspect of it.
+
+Tariq Islam  6:03  
+To be fair, though, john, you're, you're coming into the CPA with five years of Kubernetes experience prior? Right.
+
+Yeah, yeah. So I think there's a little bit of
+
+I'm not saying that that, you know,
+
+John Osborne  6:19  
+I know, I'm here
+
+Tariq Islam  6:20  
+for you. But it was there that but i think that that that call out is is the time management piece, right. And I think that's a fair call out. But, you know, for folks that are probably relatively new in comparison, I mean, five years is a very long time. And in this space, and a lot of folks that are new to Kubernetes, going back, maybe a year to taking the CPA, and they're probably time management's gonna be a lot more more difficult for them. Which is probably why you see, folks, you know, I've decided for 10 months, six months, as Jenny mentioned earlier, I mean, you had, what, two weeks.
+
+John Osborne  7:00  
+So I went, I went zero to take an exam. And four days, I failed it. But I dry basically, you guys know me, I have a really hard time multitasking, like, like, basically, and especially this year have zero ability to multitask. So I basically just didn't do I worked through a weekend and then it basically just didn't do anything at all. I work Monday, Tuesday, though, tell my boss that and then I took it like a Tuesday night. So it wasn't like I was, you know, doing a bunch of stuff those four days, like I was just locked in on studying for the exam, basically for four days.
+
+Jamie Duncan  7:34  
+And didn't do it at home. Where did you do it in the testing center.
+
+John Osborne  7:38  
+So you you to at home, which was interesting that your mileage will vary on that, overall was a good experience. But having taken for the exams, I've noticed that the person on the other end of the computer is can be can care more or less about the stuff in your room. Like, like they don't let you have to even drink water unless it's out of a clear bottle. And, you know, I had like an energy drink. And I had like a few boxes in the room. And the first person was like, yeah, whatever, I don't care. And then the next person was like, they found out that I was Suffolk somebody's name, and they started freaking out about that. And then they made me take everything out of the room. Like they even made me take like pens out of the room. It's like if you think I could pass the CPA was something magical that written the pen like, like, just let me pass it because that would be
+
+Tariq Islam  8:26  
+great. What if you're drinking overnight steroids?
+
+John Osborne  8:28  
+Yeah, yeah, I've got. I've got Kelsey Hightower and a listening device and the other end of this. That's a James Bond.
+
+Jamie Duncan  8:37  
+And it's across the room.
+
+John Osborne  8:39  
+Yeah. Yeah, exactly. But I did fail the first time.
+
+Jamie Duncan  8:46  
+Yeah. So and you failed it. He said it was the two hour thing. And, and I would target two hours, but we're going to give you fewer questions and know that you're not going to answer some of them.
+
+John Osborne  8:58  
+So it was not it was not just about the two hours. I would say like, for me, then I don't know if this is like a few guys are like this, or I'm sure there's probably other people like this. But I don't know if it's an you call it neuro divergence or what but I just had an incredible time focusing on directions to like, I can't even I cannot even dial in, you know those phone numbers where you dial in and it tells you press one for this press two to this, like, by the time I get to three, I've incepted like five levels down and I'm like laughing about something that happened like 15 years ago, like I can't even and then I've got a focus and go through that like three or four times. So on the on the CPA RL nice exams to like, every question is a new cluster. And so you have to spend a lot of time especially in the CPA exam, it's admin, you have to switch users and nodes and often switch the Kubernetes context of the cluster. And I got credibly wrapped around the axle that like there's a question on Etsy D and I was working on the wrong Etsy D instance. For like, two 20 minutes, you know, is the wrong user on the wrong node? I was answering the question in the wrong cluster, because I'm switching like, like my n switch micro res context there. So if you have, if you have any sort of, I don't know, if you call it like ADHD or something, but if you have those issues, like it's getting used to the whole test environment, actually, that was part of the feedback I left them to is like, you know, you you actually should have almost like a mock exam, just so people get used to the whole testing environment, because that was that eyesight vaulted, you know, I just completely segfault on that part of it.
+
+Jamie Duncan  10:35  
+I can just imagine you now taking the exam with like one of the spins, the spinning top from inception on the exam. Yeah. And the exam Proctor making you move it, and you're just lost in there forever.
+
+John Osborne  10:48  
+Pretty much what happened? I mean, it was I was halfway night answered, like two questions and the next hour to answer 50. So it's like, and you need to look at every question, because some of them are actually pretty easy. And so you're really doing yourself a disservice if you don't at least look at every question.
+
+Jamie Duncan  11:05  
+Like triage them. And yeah, after them strategically,
+
+John Osborne  11:08  
+yeah, it's hard to because, you know, like I said, you'd have six or seven minutes of question, if you spend, you know, seven minutes, and it's not working. You can that can pretty much turn into 20 minutes, where it's not working pretty quickly, right? So you kind of have to be pretty disciplined about, you know, it's like the Soup Nazi, right, you just gotta like answer and move on. Next. So I
+
+Tariq Islam  11:29  
+thought certain items go like, yeah, time just accelerates for x when you're taking an exam?
+
+John Osborne  11:35  
+Yeah, it really does.
+
+Jamie Duncan  11:38  
+So it's a practical exam. So the ck is certified Kubernetes. architect, and then the CKD is the certified Kubernetes. app developer. And is there a bit of what I've seen and other co workers and peers that have taken both of those, they say that the ad is almost a subset of the CPA, there are some differences, but it's not as complex and exam
+
+John Osborne  12:04  
+is that it was your experience. If you can pass the CPA, you can probably pass the CKD without studying. Because it is it is enough of a subset it's there are differences like for security for CKD, you just need to know how to set the security context. Or as in the CPA, you need to know about authentication authorization, you need to know more of the basic security primitives like the certificate signing, the certificates API, and the certificate signing request and all that stuff. So there are differences. They, you know, they're heavier on some of the stuff a developer might care about, like config maps and secrets and those things. But as Tarik actually pointed out, it's pretty funny that it's like a it's a little bit of an oxymoron. Right. But a CKD in and of itself.
+
+Tariq Islam  12:57  
+Yeah, I think it's misnamed. I mean, I, what would you call it? Not not? Oliver?
+
+Unknown Speaker  13:06  
+Yeah. Right.
+
+Tariq Islam  13:09  
+It's Kubernetes application developer, I'd argue isn't actually a thing. Unless you're doing it wrong.
+
+Yeah. Are you writing custom controllers? Yeah, exactly. Yeah. That's that's the limit, though. Right. That's the ceiling for for a Kubernetes application developer. And I love that you said that, Jamie, if you're writing controllers, you're effectively writing Kubernetes apps?
+
+Yeah, I just I don't agree with that.
+
+John Osborne  13:39  
+It's one of those things where it's like team culture, you know, you go into a lot of big enterprise customers, and they're not allowed to touch anything other than code, which gets pulled out and, you know, compiled are delivered by a platform. But you know, some of these smaller teams, the developers do have access to manifest files and those types of things. But I could see it being valuable for those types of teams. But yeah, I mean, I think what Kelsey Hightower always kind of says, where it's like, you know, if you're at the developers are using the all API's directly, you know, you've probably failed at something at some point, you know, that should be a level of abstraction there. So
+
+Tariq Islam  14:14  
+that's just that I've been I've, I've talked, I've talked to organizations where they do have the developers kind of in the weeds with the YAML. And they've got config maps, and as part of the repositories as part of the code repositories, it's it's kind of a mess, workflow, start bleeding together.
+
+Jamie Duncan  14:30  
+Yeah, that's just asking for pain.
+
+Tariq Islam  14:32  
+Yeah, it's tough to unwind. So but I don't want to I don't want to dive into that too much. I know we're talking about the the certifications, but it's, I'm not I'm not shocked that the CKD is, you know, relatively easier. I guess if that's a, that's an okay term to use than a ck et.
+
+Jamie Duncan  14:50  
+I've been sitting here trying to think up a name for the CKD
+
+John Osborne  14:54  
+ck DevOps certified.
+
+Tariq Islam  15:01  
+Here we go.
+
+Unknown Speaker  15:02  
+Yeah.
+
+John Osborne  15:04  
+I did learn a lot though even though I've been using Kubernetes. For a while I actually kind of wrote down a little list here of things I wanted to see. Yeah.
+
+Jamie Duncan  15:10  
+What's like, the most thing is like, you've been around for a long time. You've been doing Kubernetes for a long time. Yeah. What's the like? What's the weird? Like the the crazy Kubernetes tricks that you didn't know, on the front side of this experience?
+
+John Osborne  15:24  
+Yeah, I think and I actually, I don't know about you all, but I enjoy taking certifications of tech, I already know, because I already have the, like, the building blocks in my memory, we're actually learn, you know, more than if I'm, if I'm taking it on a brand new tech, then I tend to like, it doesn't really stick as much. You know, I already have the kind of memory building blocks. I don't know what the, I don't know what you would call it. But it seems to kind of stick out better. So last, I want to ask you guys if you if you know these things? Or maybe it was just me that didn't know them. First, pods have their own DNS entries did not know that. So they actually have a DNS entry that's based on their IP with a a dash in between.
+
+Jamie Duncan  16:14  
+Yeah, it looks like the like the internal, the internal host names for Amazon instances.
+
+John Osborne  16:20  
+Yeah, exactly. I I did not know that I knew services had I knew that, you know, stateful sets could get their IP. I didn't know that. Basically, every pod had their own IP address.
+
+Tariq Islam  16:30  
+I didn't know that. But only only recently. Did I figure that out?
+
+Jamie Duncan  16:33  
+Yeah. Yeah, I think I stumbled onto it while looking for a solution to a problem. But yeah, it happens that I needed it once. Yeah. All right. So cool. Fact number one, what's stopping the band? Alright, keep stopping the band. So
+
+John Osborne  16:50  
+you probably tried to edit a pod before and you got kind of this Access Denied? thing. There's only four. There's only four fields in the pod that you can edit without having to basically delete it and recreate it. Do you know what those four are?
+
+Tariq Islam  17:12  
+Now off the top of my head.
+
+John Osborne  17:14  
+It's the the container image the init container image active deadline and the tolerations piece of it. And
+
+Tariq Islam  17:22  
+billions of times it's a forehand, upgrade. And yeah, for the application,
+
+Jamie Duncan  17:27  
+you turn the square from blue to green. I didn't know that. I knew that they were limited. I didn't know they were limited that much. I thought there would be more than four. That's interesting.
+
+John Osborne  17:39  
+Another thing I didn't actually realize either is when you do try to make those edits and it doesn't let you it actually saves the ML file to somewhere in temp. Did you know that?
+
+Jamie Duncan  17:50  
+Oh, the like the the invalid edit?
+
+John Osborne  17:52  
+Yeah, it's it saves the invalid edit. And then you can just you could you know, delete the part and then apply using that invalid edit from a temp directory.
+
+Tariq Islam  18:01  
+I did not know that.
+
+Jamie Duncan  18:03  
+That's cool. No, that's a new one on me too. That's a great little. That's a little it's a handy little trick there.
+
+John Osborne  18:08  
+This is actually a big one. That's I don't know, it might be embarrassing. I don't know how long to spend about but I totally missed this. I just haven't maybe it's done looking at the docs, but you're probably familiar with with liveliness, probes and readiness probes. They're basically these checks that run to make sure your application is either healthy or, and ready to receive traffic as well as just kind of in the state that it's in. But there's actually a third one, which is called startup probes, which are essentially probes for for legacy applications that might have really slow initialization times. Where did you where you were at that existing?
+
+Jamie Duncan  18:46  
+Those are new ish, like they're, they're just ga and like 117 or even 118 right. Okay. Yeah.
+
+Tariq Islam  18:55  
+Man, that would have been handy years ago.
+
+Jamie Duncan  18:57  
+Yeah, I came across them while looking through some some stuff. Like just kind of reading about a recent release it. I think they Alford maybe 115 116. And I think they're just now in like beta. But yeah, I didn't know them. But just again, just kind of dumb luck stumbled across them at some point. Okay.
+
+John Osborne  19:19  
+Yeah, it wasn't, that was new to me. I actually had never even heard of it.
+
+Jamie Duncan  19:23  
+I'm going to look up when they came out to see if I'm right.
+
+John Osborne  19:26  
+the CPA exam was kind of big on these patterns. So of what a sidecar is, so they actually have three different they they declare things differently between different types of sidecars. So, a sidecar, you know, we think of like a recovered service mesh, we have this proxy container that's that's in the same pod as your application. But in the ck they actually have had three different types of patterns and they just call the sidecar. Basically any extra container in the pod to kind of extend the functionality But they also have another pattern called the ambassador pattern, which is a proxy to network, the connection to the main container, and something called an adapter pattern, which would be like transforming your log files or something like that. So
+
+Tariq Islam  20:13  
+yeah, I've seen these patterns. It's somewhere in documentation. I ran into this thing, like, maybe last year, around different sidecar patterns. It made sense. I just I didn't realize it was it made so much sense that it would make its way onto the cDk.
+
+John Osborne  20:31  
+It made sense. And I'd heard of them before, but I definitely couldn't. If you asked me what was what I definitely couldn't have answered that before the exam. Yeah. This one was kind of small, but it was actually pretty helpful for the exam is that if you do if you run explain from the command line, so if you do, like, coop CTL, explain, you know, it gives you the output of kind of the spec of the object you want. So if you type coop CTL explain it tells you you know, the different fields in the pot in the pod, if you do coop CTL explain pod, but it actually you can pass this recursive flag, which will go down into each sub object, and then you can grep for whatever you want. So if you want to look at, like the tolerations in a pod, you could give it the tacktech recursive flag, and he'll go down into, you know, each sub object in the in what you're recursively explaining, and they'll go down as deep as you want.
+
+Tariq Islam  21:23  
+So I knew about this earlier this year, and, or whatever it was, I I'd seen it in passing through my Twitter feed. Okay, and I feel like this is, so you guys know, I mean, it's super useful, right? Because I feel like otherwise, you're always diving into the Kubernetes documentation, which you know, I kind of hate doing. Um, that's, that's really handy. Love stuff like that.
+
+John Osborne  21:52  
+I got, I got a few more. Couple more, that are interesting. Without getting too dry. That if you're familiar with node name, it's basically a, a field on the pod that you can set. And it'll skip the scheduler entirely. And it'll just go to the node, the the fields that you put in that name. So it's just basically a completely bypasses Scheduler. What's interesting is, which I knew that going in, it's part of the security piece that, you know, customers like to lock down if needed, but the daemon set is also completely ignored by the scheduler. Well, I knew static pods as well. But the daemon sets completely ignored by the scheduler, I think it just actually sets the node name. And then that's it.
+
+Tariq Islam  22:41  
+Here's a follow up question to that. I don't know if either of you guys know. But when something like that, what you just mentioned, john, how does that get prioritized against like taints and tolerations.
+
+John Osborne  22:53  
+So it actually skips it entirely. So and then normal? Because tangents are the scheduler, okay. Yeah, part of the scheduler, so, and the output of the scheduler is the node name. So that's what it does. At the end, it actually just sets the node Name field. But the daemon set also skips that whole whole thing as well. Yeah, that was kind of there was a couple other small things, command lines and stuff like that. But yeah, that was Those were the kind of the main kind of cooler things I learned that I wasn't really aware of already. I mean, you definitely miss documentation and things like that, when you're, you know, iterates, every three months and all that stuff. So there's definitely things you can miss.
+
+Jamie Duncan  23:30  
+So startup probes we were talking about a few minutes ago. They were alpha and 116, and 117. So they are really meant brand spanking. Yeah. And they de graduated to beta in 118. I said, let's see. Yeah, so I guess if they're ready, they want a Tim was kind of a big, like, they did a whole lot of sort of code cleanup in 118. So yeah,
+
+John Osborne  23:56  
+they got it pretty locked down. I saw something on Twitter where it was like they deleted, you know, crazy amounts of code. And, yeah, they deleted more code, which is always a good thing.
+
+Jamie Duncan  24:07  
+So don't feel bad about missing startup probes when we were doing the open shift book, john, because it didn't exist. Yeah. We were working on Yeah, we're gonna do one dot seven. Yeah. Yeah, pretty good. 10 releases early for for startup probes. So don't worry about them not being in that chapter. They didn't exist. So yeah, so very new stuff. This is a practical exam. Coming out of Red Hat for so long. I'm a fan of practical exams. And I'm a fan of them just in general because you you demonstrate mastery, as opposed to demonstrating the ability to take a test Well, a multiple choice exam. If your brain is wired for it, you can go in with you know, you can really leverage the method. Where is a practical exam where you're in there actually manipulating the levers and the knobs you have to demonstrate mastery. So I'm a fan of the process that says I was doing a little looking a little research before we got started. And I don't know if this is a good or a bad thing. And Tarik, I kind of want your take on this as a people manager, looking at a list of like the, the certifications that get you more money, which is what all these, you know, there are only 8 million results when you search for that all of the top ones are multiple choice exams.
+
+Tariq Islam  25:26  
+Yeah.
+
+Jamie Duncan  25:28  
+And oddly, the top one is one of them that I took. I didn't know it until about an hour ago. But the the Google certified cloud architect is ranked by several websites, the one that gives you the most salary boost. Yeah, that was not known, I would have guessed.
+
+Tariq Islam  25:46  
+As far as hiring goes, I mean, as at least as it pertains to practical exams, like the CK and CKD for the listeners, if you if you kind of go back and listen through how john described the process, and, you know, what was what was required, like, you know, I've done I've lost count of how many candidates I've interviewed over the years for, you know, Kubernetes, specialist and things like that. And, you know, nine times out of 10, you can always, always tell the difference between someone who has theoretical knowledge that only goes so deep. And versus the practical knowledge of someone who's, you know, kind of been there done that hands on practical level experience. And I gotta tell you, there's there is a major, major dearth of skill sets, like practical skills in, in this space, it's alarming. how rare it is. I've seen the CPA personally, if I see someone that has a CPA, under their belt, at least, you know, somewhat recently, or even if it's a little bit older, I mean, that's a major, major positive. Now, I can't talk about like compensation. But as far as you know, qualifications go, it's, it's, it's a big one for me, anyway,
+
+John Osborne  27:05  
+it's definitely hard enough where it's like, even if you just studied for the exam, and you miss some of the fundamental concepts and things like I'm still impressed because it is, it is pretty difficult.
+
+Jamie Duncan  27:18  
+Yeah, it does. So it shows them grit, not just intelligence, not just study skills, not just natural ability, but grit, you know, it's a hard exam. And maybe it's, as john was describing it, I really didn't like the changes. When we were starting out like that, you know, they cut it from three hours to two, and they actually cut the number of questions, but it's designed for you not to finish, it's designed for you. You know, it's designed for you not to be able to show that you know, everything that you're supposed to know. But it does show that, you know, it does take some prep time. And it's known, like you can't just unless you've been in it five plus years, like john has, it's almost impossible to go in cold or even lukewarm, and succeed at this thing. And it also shows some the grit of going through a pretty stressful testing experience in demonstrating mastery of the topic. And like Tarik said, there's a huge gap, someone who legitimately knows how to work with Kubernetes systems and show value of them. Like they're, they can effectively write their own check right now.
+
+Tariq Islam  28:27  
+Yeah, they can.
+
+John Osborne  28:28  
+You brought up a good point on crit, because, like not panicking when you get into the exam is really important. And because some of the, there was no rhyme or reason to the level of difficulty of the questions in terms of where they were in the exam, like some of the hardest questions were right up front. So it could be really easy to panic, and you could get 20 minutes in and not have answered a question, you could want to just walk away, but just trying to be calm, and just, you know, getting through it, and making sure you look at all the questions is really important. So just, you know, not panicking. Because you might want to, with a like, especially if you're like me kind of accepting the instructions, right? So yeah, but just just sticking with it and making sure you get to get through everything is important.
+
+Tariq Islam  29:16  
+And another aspect of that grit though, is I think the Sica a, it performs as a, like a forcing function. For someone who would like to have a profession in this space, whether it's, you know, what we do pre sales engineering or consultancy or what have you, you know, you need that forcing function to get hands on, you can't just walk through documentation and take catacomb Labs and expect to get proficient enough to the point where, you know, you're going to be super effective. I think, I mean, I get I get a lot of blog readers coming in and, you know, ask them basic questions around, okay, you know, walk me through the Kubernetes architecture Some folks fall flat on that, and other folks are great at it, and then I go one level deeper, and then they fall flat. And that happens all the time. But I feel like with a CPA, you know, you're forced to learn, as you mentioned, john, how things are stitched together how things work together, you're actually in there, forcing yourself during the exam prep, to do things with the, with the platform. And that, that goes a long way. You know, in our professional and sales engineering side, some of the best learning that we've done, I think, has been because we were presented with a problem from a customer, or an enterprise organization that needed solving. And so at least for me, that's, that's, that's where I caught my teeth on Kubernetes was because I was just solving other people's problems around this space.
+
+Unknown Speaker  30:49  
+Hmm.
+
+Tariq Islam  30:51  
+But it's really about the hands on the grit, the discipline, and, and, you know, just making sure that you're not relying on, you know, the hundreds and hundreds of blogs out there, to learn about a thing, that that you're, even if it's in a limited way, that you're getting deep in at least, you know, a couple of different areas of the platform,
+
+Jamie Duncan  31:12  
+if nothing else, or the dozens and dozens of podcasts,
+
+Unknown Speaker  31:17  
+right? like ours. Exactly. Yeah.
+
+Jamie Duncan  31:21  
+Sorry, I thought that was gonna be a more immediate lifeline.
+
+John Osborne  31:26  
+It would be hard to pass a CPA without knowing, even though it's all practical without also knowing a lot of the theory and things. I mean, I've interviewed people that have a lot of Kubernetes hands on experience and know, a lot, but then they also have never heard of like, some of the container fundamentals, like they couldn't tell you what a what a pause container is, or even what a Linux namespaces they never heard of that. And so, you know, I don't think you could take a cert and just say, this person knows everything, but it, it's definitely, it's a really hard exam, you're gonna have tons of respect for anyone that could pass it. And, you know, it's definitely takes, you know, some good amount of studying to, to get through it, you have to, to get this hands on, you have to answer the question so quickly, that you can't just really memorize anything.
+
+Jamie Duncan  32:21  
+I'm kind of curious to get both of your takes on it is tark. As a manager, you have probably the most experience in this. I know, john, and I've both interviewed hundreds of people over the years. But you are you, you take on the budget for somebody, you know, you you allocate the headcount, which is a completely different creature than what genre would do is individual contributors. Does it help and coming from my position where I essentially started my it career by going out and getting a couple of certifications in 2006. going out and getting a couple of comp to certifications and getting a job at a help desk. I started my career with with certifications because I don't have a traditional college degree. And even when I was in college, I didn't have a degree I wasn't studying like computer science, or anything related to that field. I was a history major. So I think they're incredibly valuable because I've used them multiple times to to pivot or even start my own career. What do you I know, John's got what you have a master's and you have an MBA and a Bachelor's tarc you have at least a bachelor's. And they're both in field
+
+John Osborne  33:34  
+that wasn't by design. A I hated my first job in tech so much. So I got an MBA, hoping to do something else. And then I found you know, I found my next job, I really liked it, and ended up getting a software engineering Master's. But
+
+Tariq Islam  33:49  
+so I actually I have a master's in systems engineering, which is basically just an MBA, it's the text version of an MBA. That's so there's, I'm not going to hold that up. Like it's some some great thing. But um, anyway, that aside, though, I will say so, you know, last year, I had the opportunity to actually manage a team of specific, you know, specifically Kubernetes specialists and that was great. And, and I've also had the opportunity to mentor a number of folks who are new to containers and Kubernetes, like I'm talking about from the ground up, what is C groups, what are Linux namespaces? You know, basic Linux networking concepts and things like that. And I gotta say that what you mentioned, Jamie, around your affinity for practical exams, I mean, it is. It is so important. I wouldn't, I can't imagine building a team of folks that are intending to specialize in this space, that don't have a practical exam under their belt under their belt, and part of that is is the issue velocity of the tech that we're talking about here, right? let you know, just in five years. It's a quote unquote long time in this space, because of just how much has happened, it feels like 20 years. And so getting caught up, it takes time. And having a certification like that, using that as a forcing function to accelerate your learning. Even if you don't know, everything there is to know about Kubernetes. That's, you know, certainly not the expectation. But having that foundation, having the theory and then having the practical experience in a few areas on top of that theory, that goes a really, really long way to industry today. And that's, that's the piece that's missing, right? And that's why we see such a dearth in the skill set in Kubernetes, in the Kubernetes ecosystem, because it's plenty of theory, very little practical experience on top. I mean, that's, that's my take on that.
+
+John Osborne  35:57  
+I put a lot of thought into the Where should people get started? Question, I don't have a great answer, I do have some kind of thoughts around it. But, you know, it is I think, difficult. It's, you know, when I, when I first started getting really into tech, you know, it's like the LAMP stack was the thing, when I first graduated, just writing C and ACU by myself, which is why I wanted to quit. But you know, when I really started getting into getting into apps and delivering them and things like that, on teams, and kind of doing cool stuff, it was all about the LAMP stack, which is like, infinitely more easy than, you know, all the cloud adoption, you know, the networking is different in the cloud networking in general, you know, Kubernetes, all the containers, all the ecosystem components, I do think it's a lot harder to get started now. And, you know, having hands on knowledge as part of a way to get started in a certification, I think certifications probably get a bad rap, I think that they actually do provide a ton of value. They're not the be all end all. And there's definitely people out there that just take certifications, but I do think they provide a ton of value, and they are a good way to get started. Or if you're even, you know, experienced and senior and you want to kind of fill in some of the gaps and making sure that you're not too rusty, you know, they're also really helpful for that, too.
+
+Jamie Duncan  37:14  
+They're certainly not the complete solution. And again, it's just showing that grit that both of you had the the fortitude, the grit to go and get a bachelor's degree and then turn around and go and get MBAs or, or the tech equivalent of an MBA, like Tarik talking about the grit of just putting up with that many years of school shows some capabilities and show some initiative, thinking, it's kind of interesting that you can add to that with a certification. But you can also almost replace that with enough. With enough practical experience. This is I've been amazed at our industry, since I got into it, that it is very much. It's very much an apprenticeship. And we all don't acknowledge it consciously all the time. But we all very much apprentice somewhere.
+
+Tariq Islam  38:05  
+Yeah,
+
+Jamie Duncan  38:05  
+that's totally true. I mean, it's very much a guild kind of system, like you can succeed by showing ability. And you don't, and there may be some roofs and some ceilings in place, depending on your career path. But you can do okay without traditional traditional training in this industry. And it's one of the few places where that still true.
+
+Tariq Islam  38:26  
+I don't want to open this can of worms, because this is a whole probably a whole other episode. But But yeah, this is one of those areas where I really could not care less if you have a college degree, right? Like you can you can be an absolute Grandmaster at this stuff without having ever gone into college. Like it's it's an it's super valuable.
+
+John Osborne  38:47  
+Yeah, I think so. I will probably put some tips out that I thought were helpful. And I felt like some of the existing stuff for the exams was unhelpful. But if you haven't met it, I wouldn't mind chatting about the new exam that was released as well. Before we before we close out called the
+
+Jamie Duncan  39:05  
+Yeah, let's, let's kind of make that the credit. So you're you actually took an exam that doesn't exist yet. It's still in beta.
+
+John Osborne  39:11  
+I took an exam that doesn't exist. I made it up. Yeah, they just made it up. It's called a certified Kubernetes security specialist ck s it's going to go ga in a month. It's It was pretty difficult. I would say probably a little more difficult than a CKD. Maybe a smidge less than a CPA. I don't know if I passed yet. So as to get a pass fail soon. based around kind of the other exams I took I'd probably say 5050 it was it was pretty hard to to study for it. Because Because it's beta, there's no study guide. There's no practice questions. There's there's just on the Linux Foundation website, there's high level bullet points to study for whichever vague like, let me read a couple of to detect all phases of an attack, regardless of where it occurs and how it spreads. How do I translate that into coop? CTL? I have no idea. Wow, that's within physical infrastructure apps, networks, data user and workloads.
+
+Jamie Duncan  40:17  
+In a no, I'm sure you say, yeah, I'm sure you signed some sort of agreement. Like you can't talk about these exams after you take them in that standard issue. Yeah, but I guess, did they translate that statement into something that you could practically demonstrate?
+
+John Osborne  40:32  
+So what I, my, what the way I studied for it was based around my experience with CPA and CKD, actually, there's you do have, you can have one tab open in your browser and access the Kubernetes, GitHub page and the Kubernetes Doc's page. And I actually felt like a lot of the questions were based on information that were in the docs. Now, you would need to know where in the docs they were, because you have to answer so fast that you're not going to cold answer anything with just the docs, right, you got to at least know three fourths of the answer and then maybe fill in the blank with a doc that you have to look up real quick, cuz you have to move so fast. But for the for the ck s, there is a, a secure cluster guide. So I basically went through that, and then picked out everything out of that. And just kind of did hands on stuff with cube ADM and pod security policies and SC comp and some of the other security pieces that are out there. There is some existing guidelines that other people put out on GitHub, I actually put together an 18 page word doc, because I really wanted to pass it. And I was just basically copying and pasting just different facts and things that I was finding in Docs into this Doc, but into this Google Doc, but I might share this, I clean it up and share this. But if especially if I pass and hopefully it'll be helpful for people, but it was big on network guide for it. Yeah, the first the first guide for it, but yet so many. It was it was it was a hard exam. But I do think it's it's pretty helpful in terms of what it tries to accomplish with the cluster hardening the SR hardening, there was even a Docker file, stuff that was in there yamil security pieces, image scans, a lot of the stuff that I see, like large enterprise customers wanting to do to secure their cluster, it was covered in the exam. So I did, I did feel like there was, especially the some of the exams did have real world questions. So I do see out in the wild. So I did, I did feel like that was pretty helpful for in terms of, you know, if that's, if that's what you're looking to do secure a cluster for, you know, for a customer, I did think it was it was a an exam I would recommend, but the CPA was a requirement to take it as well. So you do have to have the CPA first. But they did have some micro services stuff, some base image things and system calls. And it was a it was a challenging exam, I wouldn't say as hard as a CPA, but you do have to pass the CPA to take it so
+
+Jamie Duncan  43:10  
+nice. And like some of the stuff you mentioned, isn't in Kubernetes, natively, like image scanning and that sort of stuff. But it's the Linux Foundation test. So they brought in were there some other Linux Foundation tools employed there?
+
+John Osborne  43:24  
+Yeah, and I won't say, I won't say we can't. Yeah, but yeah, I won't say which ones. But I will say that was a deviation from the other exams, like virtually everything was ck and CKD. Was coop CTL based, or you know, you're looking at files for the core Kubernetes components. And with vi By the way, you do need to know vi pretty well for the exam. So study up on that if you if you're not getting that,
+
+Tariq Islam  43:48  
+if you needed to exit vi
+
+John Osborne  43:51  
+Yeah, you do need to have that. Yeah.
+
+Jamie Duncan  43:55  
+I don't have enough knuckles to use Emacs, I had to learn. Yeah.
+
+Tariq Islam  44:01  
+I feel about Emacs. Jamie.
+
+John Osborne  44:06  
+It wasn't deviation from that respect. Like, there were some you wouldn't need to necessarily know them in advance. Like, you know, they were simple enough that, you know, you could run the help. If you know them in advance, that's even better. But, you know, there, you could, I think figure it out from the command line as well. They didn't. They didn't make it. So you have to be a expert in you know, every single external tool and you could probably even guess you know what some of them are? Because they, you know, they're common Kubernetes ecosystem components for for those types of things. So, sure,
+
+Jamie Duncan  44:41  
+yeah. So, john, bring us in for landing here. Your experience over the past five or six weeks around all these certifications really worth your effort?
+
+John Osborne  44:51  
+So I definitely think it was worth the effort. I thought they were pretty helpful. I use the podcast as an excuse because these actually have been things that I've been wanting to do for a couple years and, you know, you know how work is everything is always on fire. So never made the time. But you know, you use the podcast as an excuse to do that. So I was glad I did it. I think, you know, some of the big things to, to think about for the for these exams is, you know, I mentioned like, not panicking, that was very important, you know, just relax. If you can't figure out the first question or you lose 10 minutes, don't worry, there's going to be some easy ones in there. You know, getting through all the questions that you can, very important, you do need to learn, get really good at JSON path. So if you're not totally familiar with kind of traversing JSON, that that was a pretty big part of it, since you're in the command line, you know, knowing how to kind of filter out your search results was really important. Any mock exams you can find were pretty helpful. They do get partial credit, which is a big thing. So if you, you know, some of the questions were multi part. So if you don't have time, if you get, if you only have a few minutes left, or things like that, and there's a question that is multi part, you know, try to get into it as much as you can, one of the things that was nice about them was that they, they added point values to each question. So you could actually make an ROI calculation based around, you know, looking at the question and seeing how long it would take you in the point value if you wanted to, kind of rack and stack that way you use coop CTL a ton. So, you know, that's the primary thing you'll end up doing most during the exam is, you know, you can you can generate a lot of manifest files using coop CTL and cube CTL. And the dry run things where you kind of export it to YAML. There's some cool docs that I had on kind of, I guess, a speed dial in terms of, you know, to pull them up right away with the there's a coop CTL cheat sheet. There's also a reference Doc, which has basically how to create all the manifest files for service accounts and pods and deployments. So having that was pretty important, but and hopefully I'll publish this once I can clean this up. But, you know, practicing with with cube ADM is since it's based on cube ADM is the most important, but I definitely have a respect for anyone that can pass these exams, because they are hard. I mean, like you said, Tarik, I've been doing this for five years, I failed it the first time. So you know, it is a it does take some getting used to. I also want to give a shout out before we go to the the Udemy exams. I thought they were really good. I didn't do the Linux Foundation ones because they were they were an extra $200 per exam, but I assume that they're good. You know, a lot of times if you take, if you take, if you take the practice or training from the people that do the exam, a lot of times the questions are, you know, straight from the practice material, right? I don't know if that's the case. But a lot of times it is, I didn't get to do that. I took the Udemy exams, which were, you know, I think they were like only 15 or $20, or something, but they were they were not only great, but they have a community that was really helpful too. So they have a Slack channel. And people really rude each other on in the slack. It was really cool. Like even people that already took their exams, you know, came on to, you know, celebrate that with you know, I study for this since since we're five and I passed and so awesome. And people celebrate that and they stay on to kind of cheer on and answer questions for people that are studying for their exam now. So I thought that was One really cool thing about the Udemy exams was the content was really good. I didn't I didn't get through all of it. But it was really foundational, like teaching you not just how to pass the exam, but why things are the way they are. And then, in addition, that, you know, they got the kind of community around it, which was was pretty cool with the slack and things like that. So I do recommend those as a practice exams forum, whereas the practice exams and study material for it, but yeah, tons of respect. You know, if anyone has questions, you know, you can reach out to me on Twitter, I'm happy to kind of point you in the right direction, if you're curious what to study and what not to study for these things. Because I did take four in the course of like, 17 days, I think for exam, so I'm the kind of exam but yeah,
+
+Jamie Duncan  49:19  
+so we'll make sure yeah, and we'll take some extra time this week. And make sure we get all of all the notes that we can into the show notes for this episode. And make it as as a complete thought as we can. And, and thanks a lot for hanging out with this. I mean, this is I've actually learned Kubernetes trivia, as well as some tips. You guys learned a couple
+
+John Osborne  49:42  
+you guys, you guys already knew this stuff that I learned. So apparently, I'm slacking accidentally. Sure. Yeah,
+
+Jamie Duncan  49:48  
+exactly. Yeah. stumbled onto random things over the over time. Well, thanks a lot for joining us. And thanks, john, for all for putting yourself in 17 days
+
+Unknown Speaker  49:59  
+sacrificial
+
+John Osborne  50:00  
+Yeah, exactly. Yeah.
+
+Jamie Duncan  50:04  
+And thanks a lot for joining us and we'll see you here in a couple of weeks.
+
+Unknown Speaker  50:07  
+Okay. Thanks everyone. Have a good day.
+
+Transcribed by https://otter.ai
