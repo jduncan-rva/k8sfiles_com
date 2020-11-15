@@ -13,7 +13,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 In episode 7, we dig into [Linkerd's](https://linkerd.io/) feature set as well as its place in the larger service mesh ecosystem. Short version: we're impressed with the features it brings to bare; especially for having such a low barrier to entry. 
