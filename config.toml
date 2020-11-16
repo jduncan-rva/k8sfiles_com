@@ -139,3 +139,8 @@ link = "https://twitter.com/thek8sfiles"
 title = "episode-rss"
 icon = "ti-rss-alt" # themify icon : https://themify.me/themify-icons
 link = "/episodes/index.xml"
+
+[[params.social]]
+title = "youtube"
+icon = "ti-youtube"
+link = "https://www.youtube.com/channel/UC2Zji_LW1C0an6uGd8MCEMg"
