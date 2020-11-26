@@ -27,7 +27,7 @@ hope you are, too.
 url = "6376384-episode-10-helm-and-kustomize-compared.js"
 >}}
 
-[Transcript](/transcripts/10-helm-kustomize_otter.ai.srt)
+[Transcript](/transcripts/episode-10-helm-kustomize_otter.ai.srt)
 
 Our biggest connection is that `helm` and `kustomize` don't solve exactly the same
 problem. Most of the reading you do out on the internet compares them in a
