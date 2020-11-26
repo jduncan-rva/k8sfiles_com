@@ -18,7 +18,7 @@ tags:
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 {{< buzzsprout 
