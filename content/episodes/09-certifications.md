@@ -14,7 +14,7 @@ tags:
   - cks
   - linux foundation
   - career path
-type: featured
+type: episode
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
