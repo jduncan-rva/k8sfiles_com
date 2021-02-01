@@ -14,11 +14,10 @@ tags:
   - cks
   - linux foundation
   - career path
-type: episode
 
 # only the most recent 3 episodes should be featured
 # all others should be "episode"
-type: featured
+type: episode
 ---
 
 We dig down into how the CKA Kubernetes certification looks and feels, and what value certifications bring our industry (hint: it's a lot on balance). To prepare for this episode John took 4 exams in 17 days while Jamie took 2 and has another scheduled for early November 2020. So this isn't abstract, this is real life that we've recently lived.
